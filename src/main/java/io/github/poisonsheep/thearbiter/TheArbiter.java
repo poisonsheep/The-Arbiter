@@ -1,0 +1,73 @@
+package io.github.poisonsheep.thearbiter;
+
+import com.mojang.logging.LogUtils;
+import io.github.poisonsheep.thearbiter.Item.ItemRegistry;
+import io.github.poisonsheep.thearbiter.client.particle.ParticlesRegistry;
+import io.github.poisonsheep.thearbiter.client.sound.SoundRegistry;
+import io.github.poisonsheep.thearbiter.entity.EntityRegistry;
+import io.github.poisonsheep.thearbiter.event.ForgeEvent;
+import io.github.poisonsheep.thearbiter.potion.MobEffectRegistry;
+import net.minecraft.client.particle.SpriteSet;
+import net.minecraft.world.level.block.Block;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
+import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
+import net.minecraftforge.event.server.ServerStartingEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import software.bernie.geckolib3.GeckoLib;
+
+
+@Mod(TheArbiter.MODID)
+public class TheArbiter
+{
+    public static final IEventBus modBusEvent = FMLJavaModLoadingContext.get().getModEventBus();
+    public final static String MODID = "the_arbiter";
+
+    public TheArbiter()
+    {
+
+        MinecraftForge.EVENT_BUS.register(new ForgeEvent());
+
+        modBusEvent.addListener(this::setup);
+
+        modBusEvent.addListener(this::enqueueIMC);
+
+        modBusEvent.addListener(this::processIMC);
+
+        MinecraftForge.EVENT_BUS.register(this);
+
+        ItemRegistry.ITEMS.register(modBusEvent);
+
+        EntityRegistry.ENTITY_TYPE.register(modBusEvent);
+
+        MobEffectRegistry.EFFECT.register(modBusEvent);
+
+        SoundRegistry.register(modBusEvent);
+
+        ParticlesRegistry.register(modBusEvent);
+
+        GeckoLib.initialize();
+
+    }
+
+    private void setup(final FMLCommonSetupEvent event) {}
+
+    private void enqueueIMC(final InterModEnqueueEvent event) {}
+
+    private void processIMC(final InterModProcessEvent event) {}
+
+    @SubscribeEvent
+    public void onServerStarting(ServerStartingEvent event) {}
+
+    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
+    public static class RegistryEvents
+    {
+        @SubscribeEvent
+        public static void onBlocksRegistry(final RegistryEvent.Register<Block> blockRegistryEvent) {}
+    }
+}

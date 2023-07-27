@@ -1,0 +1,28 @@
+{
+  "arbiter_sword_use": {
+    "subtitle": "the_arbiter.sound.subtitle.arbiter_sword_use",
+    "sounds": [
+      "the_arbiter:arbiter_sword_use"
+    ]
+  },
+  "zooey": {
+    "subtitle": "the_arbiter.sound.subtitle.zooey",
+    "sounds": [
+      {
+        "name":"the_arbiter:zooey1"
+      },
+      {
+        "name":"the_arbiter:zooey2"
+      },
+      {
+        "name":"the_arbiter:zooey3"
+      }
+    ]
+  },
+  "arbiter_sword_charged": {
+    "subtitle": "the_arbiter.sound.subtitle.arbiter_sword_charged",
+    "sounds": [
+      "the_arbiter:arbiter_sword_charged"
+    ]
+  }
+}
