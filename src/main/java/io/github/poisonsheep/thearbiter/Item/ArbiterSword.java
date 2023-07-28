@@ -1,7 +1,6 @@
 package io.github.poisonsheep.thearbiter.Item;
 
 import io.github.poisonsheep.thearbiter.client.particle.ParticlesRegistry;
-import io.github.poisonsheep.thearbiter.client.particle.ShelterParticles;
 import io.github.poisonsheep.thearbiter.client.render.item.RenderArbiterSword;
 import io.github.poisonsheep.thearbiter.client.sound.SoundRegistry;
 import io.github.poisonsheep.thearbiter.potion.MobEffectRegistry;
@@ -40,7 +39,6 @@ import software.bernie.geckolib3.network.ISyncable;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.List;
-import java.util.Random;
 import java.util.function.Consumer;
 
 public class ArbiterSword extends SwordItem implements IAnimatable, ISyncable {
@@ -94,7 +92,7 @@ public class ArbiterSword extends SwordItem implements IAnimatable, ISyncable {
     public ArbiterSword() {
         super(tier,14,-2.4F,new Properties().tab(CreativeModeTab.TAB_COMBAT));
         GeckoLibNetwork.registerSyncable(this);
-        update_radius(2,48);
+        update_radius(1.5,24);
     }
 
     @Override
@@ -135,7 +133,7 @@ public class ArbiterSword extends SwordItem implements IAnimatable, ISyncable {
                     entity.setHealth(1);
                 }
             }
-            //player.getCooldowns().addCooldown(this, 800);
+            player.getCooldowns().addCooldown(this, 800);
             //为玩家添加调停者的庇护
             player.addEffect(new MobEffectInstance(MobEffectRegistry.UNDYING.get(), 200));
             ItemStack itemstack = player.getItemInHand(hand);

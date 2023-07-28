@@ -1,14 +1,5 @@
 {
   "textures": [
-    "the_arbiter:dna_0",
-    "the_arbiter:dna_1",
-    "the_arbiter:dna_2",
-    "the_arbiter:dna_3",
-    "the_arbiter:dna_4",
-    "the_arbiter:dna_0",
-    "the_arbiter:dna_1",
-    "the_arbiter:dna_2",
-    "the_arbiter:dna_3",
-    "the_arbiter:dna_4"
+    "the_arbiter:shelter"
   ]
 }

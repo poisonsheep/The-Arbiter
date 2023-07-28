@@ -1,6 +1,5 @@
 package io.github.poisonsheep.thearbiter.client.particle;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
 import net.minecraft.core.particles.SimpleParticleType;
@@ -19,7 +18,7 @@ public class ShelterParticles extends SimpleAnimatedParticle {
     private double oz;
 
     private  double deltY ;
-    private final double speed = 0.001;
+    private final double speed = 0.01;
     private ShelterParticles(ClientLevel world, Player player, double x, double y, double z, double x0, double y0, double z0, SpriteSet sprites) {
         super(world, x, y, z, sprites, 0.0F);
         this.player = player;
@@ -28,30 +27,21 @@ public class ShelterParticles extends SimpleAnimatedParticle {
         this.z = z;
         this.deltY = y-y0;
         this.sprites = sprites;
-        this.quadSize *= 1.5F + this.random.nextFloat() * 0.6F;
+        this.quadSize = 0.03F + (float)Math.sin((double)this.age / 60.0 * Math.PI + (float)Math.random() * 2.0F) * 0.02F + (float)Math.random() * 0.01F - 0.006F;
         this.lifetime = 200 + this.random.nextInt(15);
         this.gravity = 0.0F;
-        int color = 15916745;
+        int color = 16777215;
         float lvt_18_1_ = (float) (color >> 16 &  255) /255.0F;
         float lvt_19_1_ = (float) (color >> 8 &  255) /255.0F;
         float lvt_20_1_ = (float) (color &  255) /255.0F;
         setColor(lvt_18_1_, lvt_19_1_, lvt_20_1_);
         this.setSpriteFromAge(sprites);
-        this.alpha = 0.8F;
-        roll = (float) (Math.PI * 0.5F * random.nextFloat());
-        /*double xT = x - x0;
-        double zT = z - z0;
-        double tM = Math.sqrt(xT*xT+zT*zT);
-        double vX = -zT/tM * speed;
-        double vZ = xT/tM * speed;*/
         this.xd = 0;
         this.yd = 0;
         this.zd = 0;
         ox = x0;
         oy = y0;
         oz = z0;
-        System.out.println(x0+","+z0);
-
     }
 
     public int getLightColor(float p_189214_1_) {
@@ -63,7 +53,6 @@ public class ShelterParticles extends SimpleAnimatedParticle {
 
     public void tick() {
         super.tick();
-        this.oRoll = roll;
         double xT = x - ox;
         double zT = z - oz;
         double tM = Math.sqrt(xT*xT+zT*zT);
@@ -83,8 +72,7 @@ public class ShelterParticles extends SimpleAnimatedParticle {
         }
         this.alpha = subAlpha;
         this.setSpriteFromAge(this.sprites);
-        //这个roll旋转只是以自身
-        this.roll += (float)Math.random() * ((float)Math.PI * 0.3F * alpha);
+        this.quadSize = 0.06F + (float)Math.sin((double)this.age / 60.0 * Math.PI + (float)Math.random() * 2.0F) * 0.03F + (float)Math.random() * 0.015F - 0.0075F;
         ox = player.getX();
         oy = player.getY();
         oz = player.getZ();
@@ -105,9 +93,7 @@ public class ShelterParticles extends SimpleAnimatedParticle {
         }
 
         public Particle createParticle(SimpleParticleType typeIn, ClientLevel worldIn, double x, double y, double z, double x0, double y0, double z0) {
-
             Player player = worldIn.getNearestPlayer(TargetingConditions.forNonCombat(), x0, y0, z0);
-
             ShelterParticles p = new ShelterParticles(worldIn, player, x, y, z, x0, y0, z0, spriteSet);
             return p;
         }
