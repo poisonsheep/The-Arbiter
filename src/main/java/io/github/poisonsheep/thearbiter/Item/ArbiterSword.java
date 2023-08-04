@@ -12,6 +12,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
@@ -123,6 +124,7 @@ public class ArbiterSword extends SwordItem implements IAnimatable, ISyncable {
             List<LivingEntity> entities = worldIn.getEntitiesOfClass(LivingEntity.class,new AABB(blockpos).inflate(20));
             for (LivingEntity entity:entities){
                 if(entity!=player){
+                    entity.addEffect(new MobEffectInstance(MobEffects.GLOWING,200));
                     LightningBolt lightningbolt = EntityType.LIGHTNING_BOLT.create(worldIn);
                     lightningbolt.moveTo(Vec3.atBottomCenterOf(entity.blockPosition()));
                     lightningbolt.setCause(player instanceof ServerPlayer ? (ServerPlayer)player : null);
