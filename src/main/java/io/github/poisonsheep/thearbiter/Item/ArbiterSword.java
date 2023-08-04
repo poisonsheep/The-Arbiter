@@ -89,19 +89,16 @@ public class ArbiterSword extends SwordItem implements IAnimatable, ISyncable {
            return Tier.super.getTag();
        }
    };
-
     public ArbiterSword() {
         super(tier,14,-2.4F,new Properties().tab(CreativeModeTab.TAB_COMBAT));
         GeckoLibNetwork.registerSyncable(this);
         update_radius(1.5,24);
     }
-
     @Override
     public void initializeClient(Consumer<IItemRenderProperties> consumer) {
         super.initializeClient(consumer);
         consumer.accept(new IItemRenderProperties() {
             private final BlockEntityWithoutLevelRenderer renderer = new RenderArbiterSword();
-
             @Override
             public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
                 return renderer;
@@ -211,17 +208,14 @@ public class ArbiterSword extends SwordItem implements IAnimatable, ISyncable {
     public <P extends Item & IAnimatable> PlayState predicate1(AnimationEvent<P> event) {
         return PlayState.CONTINUE;
     }
-
     @Override
     public void registerControllers(AnimationData data) {
         data.addAnimationController(new AnimationController(this, RUNE_CONTROLLER, 4, this::predicate1));
     }
-
     @Override
     public AnimationFactory getFactory() {
         return this.factory;
     }
-
     @Override
     public void onAnimationSync(int id, int state) {
         if(state == No_ENCHANTED){
@@ -232,14 +226,12 @@ public class ArbiterSword extends SwordItem implements IAnimatable, ISyncable {
             }
         }
     }
-
     @Override
     public void releaseUsing(ItemStack stack, Level worldIn, LivingEntity entityLiving, int timeLeft){
     }
-
     @Override
     public int getUseDuration(ItemStack stack) {
-        //单位应该是tick
+        //单位tick
         return 20;
     }
 }

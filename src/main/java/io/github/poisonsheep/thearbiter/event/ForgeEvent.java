@@ -16,7 +16,7 @@ public class ForgeEvent {
     public void onLivingHurt(LivingHurtEvent event) {
         // 在生物受到伤害时执行的代码
         LivingEntity entity = event.getEntityLiving();
-        // 判断生物是否有无敌效果
+        // 判断生物是否有佐伊的庇护效果
         if (entity.hasEffect(MobEffectRegistry.UNDYING.get())) {
             // 取消伤害
             event.setCanceled(true);
@@ -26,7 +26,7 @@ public class ForgeEvent {
     public void onLivingFall(LivingFallEvent event) {
         // 获取落地的生物
         LivingEntity entity = event.getEntityLiving();
-        // 判断生物是否有无敌效果
+        // 判断生物是否有佐伊的庇护效果
         if (entity.hasEffect(MobEffectRegistry.UNDYING.get())) {
             // 取消摔落伤害
             event.setCanceled(true);
