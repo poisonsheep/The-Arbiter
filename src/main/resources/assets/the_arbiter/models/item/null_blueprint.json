@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "the_arbiter:item/blueprint"
+    "layer0": "the_arbiter:item/null_blueprint"
   }
 }

@@ -9,5 +9,5 @@ import net.minecraftforge.registries.RegistryObject;
 public class ItemRegistry {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, TheArbiter.MODID);
     public static final RegistryObject<Item> ARBITER_SWORD = ITEMS.register("arbiter_sword",()->new ArbiterSword());
-    public static final RegistryObject<Item> BLUEPRINT = ITEMS.register("blueprint",()->new Blueprint());
+    public static final RegistryObject<Item> NULL_BLUEPRINT = ITEMS.register("null_blueprint",()->new NullBlueprint());
 }

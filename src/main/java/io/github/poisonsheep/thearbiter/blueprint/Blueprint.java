@@ -1,5 +1,6 @@
-package io.github.poisonsheep.thearbiter.Item;
+package io.github.poisonsheep.thearbiter.blueprint;
 
+import io.github.poisonsheep.thearbiter.event.blueprint.ReadEvent;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
@@ -12,13 +13,14 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.MinecraftForge;
 
-public class Blueprint extends Item {
+public abstract class Blueprint extends Item {
     public Blueprint() {
         super(new Properties().tab(CreativeModeTab.TAB_MISC));
     }
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+    public  InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         if(level.isClientSide){
             playSound();
             addParticle();
@@ -42,6 +44,7 @@ public class Blueprint extends Item {
         Player player = entity instanceof Player ? (Player) entity : null;
         if (player instanceof ServerPlayer) {
             CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer) player, stack);
+            MinecraftForge.EVENT_BUS.register(new ReadEvent((ServerPlayer)player,stack));
         }
         if(player != null){
             player.awardStat(Stats.ITEM_USED.get(this));

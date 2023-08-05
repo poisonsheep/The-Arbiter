@@ -121,6 +121,7 @@ public class ArbiterSword extends SwordItem implements IAnimatable, ISyncable {
             List<LivingEntity> entities = worldIn.getEntitiesOfClass(LivingEntity.class,new AABB(blockpos).inflate(20));
             for (LivingEntity entity:entities){
                 if(entity!=player){
+                    //给命中生物添加发光药水效果
                     entity.addEffect(new MobEffectInstance(MobEffects.GLOWING,200));
                     LightningBolt lightningbolt = EntityType.LIGHTNING_BOLT.create(worldIn);
                     lightningbolt.moveTo(Vec3.atBottomCenterOf(entity.blockPosition()));
