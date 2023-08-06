@@ -4,6 +4,7 @@ import io.github.poisonsheep.thearbiter.client.particle.ParticlesRegistry;
 import io.github.poisonsheep.thearbiter.client.render.item.RenderArbiterSword;
 import io.github.poisonsheep.thearbiter.client.sound.SoundRegistry;
 import io.github.poisonsheep.thearbiter.potion.MobEffectRegistry;
+import io.github.poisonsheep.thearbiter.util.BallUtil;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -43,14 +44,10 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class ArbiterSword extends SwordItem implements IAnimatable, ISyncable {
-
     public AnimationFactory factory = GeckoLibUtil.createFactory(this);
     public String RUNE_CONTROLLER = "rune";
     public static final int No_ENCHANTED = 0;
-    private int divide;
-    private double radius;
-    private int max;
-    private double divdAngle;
+    public BallUtil ballUtil = new BallUtil();
     private static final Tier tier = new Tier(){
 
        @Override
@@ -92,7 +89,7 @@ public class ArbiterSword extends SwordItem implements IAnimatable, ISyncable {
     public ArbiterSword() {
         super(tier,14,-2.4F,new Properties().tab(CreativeModeTab.TAB_COMBAT));
         GeckoLibNetwork.registerSyncable(this);
-        update_radius(1.5,24);
+        ballUtil.update_radius(1.5,24);
     }
     @Override
     public void initializeClient(Consumer<IItemRenderProperties> consumer) {
@@ -105,8 +102,6 @@ public class ArbiterSword extends SwordItem implements IAnimatable, ISyncable {
             }
         });
     }
-
-
 
     @Override
     public UseAnim getUseAnimation(ItemStack stack) {
@@ -145,66 +140,14 @@ public class ArbiterSword extends SwordItem implements IAnimatable, ISyncable {
         if(worldIn.isClientSide){
             player.playSound(SoundRegistry.ARBITER_SWORD_USE.get(),1f,1f);
             player.playSound(SoundRegistry.ZOOEY.get(),1f,1f);
-            for (int i = 0; i < max; i++) {
-                Position position = getPosition(i);
+            for (int i = 0; i < BallUtil.max; i++) {
+                BallUtil.Position position = BallUtil.getPosition(i);
                 player.level.addParticle(ParticlesRegistry.SHELTER_PARTICLES.get(),player.getX() + position.x,player.getY() + position.y + 1.2,player.getZ() + position.z,player.getX(),player.getY(),player.getZ());
             }
         }
         return super.use(worldIn, player, hand);
     }
 
-    public class Position {
-        public double x;
-        public double y;
-        public double z;
-    }
-    public void update_radius(double pR, int pDivd) {
-        radius = pR;
-        if (pR < 0)
-        {
-            radius = 1;
-        }
-        if (pDivd < 4)
-        {
-            divide = 4;
-        }
-        else if (pDivd % 4 != 0)
-        {
-            divide = pDivd + 4 - pDivd % 4;
-        }
-        else
-        {
-            divide = pDivd;
-        }
-        this.max = divide * (divide - 3) + 2;
-        divdAngle = Math.PI/(divide/2);
-    }
-    public Position getPosition(int i){
-        Position position = new Position();
-        double tR,tL;
-        int group,pos;
-        if( i < 0 || i > max-1) {
-            i = 0;
-        }
-        if(i == 0)  {   // 球顶
-            position.x = 0;
-            position.z = 0;
-            position.y = radius;
-        } else if (i == (max - 1)) { // 球底
-            position.x = 0;
-            position.z = 0;
-            position.y = -radius;
-        } else {    // 序列号除球顶和球底以外，每次切一个圆，分成divd份
-            group = ((i-1) / divide) + 1;
-            pos = i % divide;
-            tR = radius * Math.cos(divdAngle * group);
-            tL = radius * Math.sin(divdAngle * group);
-            position.y = tR;
-            position.x = tL * Math.cos(divdAngle * pos);
-            position.z = tL * Math.sin(divdAngle * pos);
-        }
-        return position;
-    }
     //动画部分
     public <P extends Item & IAnimatable> PlayState predicate1(AnimationEvent<P> event) {
         return PlayState.CONTINUE;

@@ -11,9 +11,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class SoundRegistry {
     public static final DeferredRegister<SoundEvent> SOUND_EVENT = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, TheArbiter.MODID);
-
     public static final RegistryObject<SoundEvent> ARBITER_SWORD_USE = registerSoundEvent("arbiter_sword_use");
-
     public static final RegistryObject<SoundEvent> ZOOEY = registerSoundEvent("zooey");
 
     public static final RegistryObject<SoundEvent> ARBITER_SWORD_CHARGED = registerSoundEvent("arbiter_sword_charged");

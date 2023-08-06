@@ -3,6 +3,7 @@ package io.github.poisonsheep.thearbiter.blueprint;
 import io.github.poisonsheep.thearbiter.event.blueprint.ReadEvent;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -16,13 +17,13 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.common.MinecraftForge;
 
 public abstract class Blueprint extends Item {
-    public Blueprint() {
-        super(new Properties().tab(CreativeModeTab.TAB_MISC));
+    protected Blueprint() {
+        super(new Properties().tab(CreativeModeTab.TAB_MISC).stacksTo(1));
     }
     @Override
     public  InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         if(level.isClientSide){
-            playSound();
+            playSound(player);
             addParticle();
         }
         player.startUsingItem(hand);
@@ -37,14 +38,13 @@ public abstract class Blueprint extends Item {
         return 1;
     }
     @Override
-    public void releaseUsing(ItemStack stack, Level worldIn, LivingEntity entityLiving, int timeLeft){
-    }
-    @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
         Player player = entity instanceof Player ? (Player) entity : null;
-        if (player instanceof ServerPlayer) {
-            CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer) player, stack);
-            MinecraftForge.EVENT_BUS.register(new ReadEvent((ServerPlayer)player,stack));
+        if(!level.isClientSide){
+            if (player instanceof ServerPlayer) {
+                CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer) player, stack);
+                MinecraftForge.EVENT_BUS.post(new ReadEvent((ServerPlayer)player,stack));
+            }
         }
         if(player != null){
             player.awardStat(Stats.ITEM_USED.get(this));
@@ -52,6 +52,8 @@ public abstract class Blueprint extends Item {
         }
         return stack;
     }
-    public void playSound(){}
+    public void playSound(Player player){
+        player.playSound(SoundEvents.PLAYER_LEVELUP,0.1F,1.0F);
+    }
     public void addParticle(){}
 }

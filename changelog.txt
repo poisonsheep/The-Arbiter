@@ -159,7 +159,7 @@
            Co-authored-by: Curle <42079760+TheCurle@users.noreply.github.com>
  - 40.1.34 [1.18] Allow custom rarities to directly modify the style (#8648)
  - 40.1.33 [1.18] Fix reload listener registration in ModelLoaderRegistry (#8650)
- - 40.1.32 Fix wrong position in Level#hasChunk() call in IForgeBlockGetter (#8654)
+ - 40.1.32 Fix wrong ballUtil in Level#hasChunk() call in IForgeBlockGetter (#8654)
  - 40.1.31 Add ItemStack context to Enchantment#getDamageBonus (#8635)
  - 40.1.30 Fix attack cooldown bar showing when out of reach of target. Closes #8639 (#8640)
  - 40.1.29 Improve TagsUpdatedEvent by adding update case information. (#8636)
