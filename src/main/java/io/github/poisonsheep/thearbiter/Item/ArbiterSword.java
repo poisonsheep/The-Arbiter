@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -102,7 +103,6 @@ public class ArbiterSword extends SwordItem implements IAnimatable, ISyncable {
             }
         });
     }
-
     @Override
     public UseAnim getUseAnimation(ItemStack stack) {
         return UseAnim.BOW;
@@ -136,9 +136,9 @@ public class ArbiterSword extends SwordItem implements IAnimatable, ISyncable {
             final PacketDistributor.PacketTarget target = PacketDistributor.TRACKING_ENTITY_AND_SELF
                     .with(() -> player);
             GeckoLibNetwork.syncAnimation(target, this, id, No_ENCHANTED);
+            worldIn.playSound((Player)null, player.getX(), player.getY(), player.getZ(),SoundRegistry.ARBITER_SWORD_USE.get(), SoundSource.PLAYERS, 1f,1f);
         }
         if(worldIn.isClientSide){
-            player.playSound(SoundRegistry.ARBITER_SWORD_USE.get(),1f,1f);
             player.playSound(SoundRegistry.ZOOEY.get(),1f,1f);
             for (int i = 0; i < BallUtil.max; i++) {
                 BallUtil.Position position = BallUtil.getPosition(i);

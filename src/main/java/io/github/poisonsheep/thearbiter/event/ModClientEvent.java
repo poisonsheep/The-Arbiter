@@ -1,11 +1,16 @@
 package io.github.poisonsheep.thearbiter.event;
 
+import io.github.poisonsheep.thearbiter.Item.blueprint.BlueprintBakedModel;
+import io.github.poisonsheep.thearbiter.Item.blueprint.BlueprintRegistry;
 import io.github.poisonsheep.thearbiter.TheArbiter;
 import io.github.poisonsheep.thearbiter.client.render.entity.RenderZooey;
 import io.github.poisonsheep.thearbiter.entity.EntityRegistry;
 import io.github.poisonsheep.thearbiter.entity.Zooey;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.ModelBakeEvent;
+import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -23,5 +28,18 @@ public class ModClientEvent {
     public static void onAttributeCreate(EntityAttributeCreationEvent event){
         event.put(EntityRegistry.ZOOEY.get(), Zooey.prepareAttributes().build());
     }
-
+    @SubscribeEvent
+    public static void registerModelUnBake(ModelRegistryEvent event) {
+        BlueprintRegistry.register(event);
+    }
+    @SubscribeEvent
+    public static void onModelBake(ModelBakeEvent event) {
+        //CocktailModelRegistry.bakeModel(evt);
+        //PlateModelRegistry.bakeModel(evt);
+        event.getModelRegistry().put(new ModelResourceLocation(
+                TheArbiter.MODID,
+                "blueprint",
+                "inventory"
+        ), new BlueprintBakedModel());
+    }
 }

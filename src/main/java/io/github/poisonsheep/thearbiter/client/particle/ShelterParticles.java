@@ -43,14 +43,11 @@ public class ShelterParticles extends SimpleAnimatedParticle {
         oy = y0;
         oz = z0;
     }
-
     public int getLightColor(float p_189214_1_) {
         int lvt_2_1_ = super.getLightColor(p_189214_1_);
         int lvt_4_1_ = lvt_2_1_ >> 16 &  255;
         return 240 | lvt_4_1_ << 16;
     }
-
-
     public void tick() {
         super.tick();
         double xT = x - ox;
@@ -77,8 +74,6 @@ public class ShelterParticles extends SimpleAnimatedParticle {
         oy = player.getY();
         oz = player.getZ();
     }
-
-
     @Override
     public ParticleRenderType getRenderType() {
         return ParticleRenderType.PARTICLE_SHEET_LIT;

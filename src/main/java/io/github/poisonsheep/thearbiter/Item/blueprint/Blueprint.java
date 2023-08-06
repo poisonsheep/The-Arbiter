@@ -1,7 +1,10 @@
-package io.github.poisonsheep.thearbiter.blueprint;
+package io.github.poisonsheep.thearbiter.Item.blueprint;
 
+import io.github.poisonsheep.thearbiter.TheArbiter;
 import io.github.poisonsheep.thearbiter.event.blueprint.ReadEvent;
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
@@ -16,9 +19,40 @@ import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.MinecraftForge;
 
-public abstract class Blueprint extends Item {
-    protected Blueprint() {
-        super(new Properties().tab(CreativeModeTab.TAB_MISC).stacksTo(1));
+import javax.annotation.Nullable;
+
+public class Blueprint extends Item {
+    public static final ResourceLocation UNKNOWN_BLUEPRINT = new ResourceLocation(TheArbiter.MODID, "unknown");
+    public Blueprint() {
+        super(new Properties().stacksTo(1));
+    }
+    @Override
+    public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> itemStackNonNullList) {
+        if (tab == CreativeModeTab.TAB_MISC) {
+            for (String blueprint : BlueprintList.INSTANCE.blueprints) {
+                ItemStack stack = new ItemStack(this);
+                setBluePrint(stack, new ResourceLocation(blueprint));
+                itemStackNonNullList.add(stack);
+            }
+        }
+    }
+    public static void setBluePrint(ItemStack itemStack, ResourceLocation name) {
+        itemStack.getOrCreateTag().putString("blueprint", name.toString());
+    }
+    @Nullable
+    public static ResourceLocation getBlueprint(ItemStack itemStack) {
+        if (itemStack.getTag() != null && itemStack.getTag().contains("blueprint")) {
+            return new ResourceLocation(itemStack.getTag().getString("blueprint"));
+        }
+        return null;
+    }
+    @Override
+    public String getDescriptionId(ItemStack stack) {
+        ResourceLocation name = getBlueprint(stack);
+        if (name != null) {
+            return name.toString().replace(":", ".");
+        }
+        return super.getDescriptionId(stack);
     }
     @Override
     public  InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
@@ -53,7 +87,7 @@ public abstract class Blueprint extends Item {
         return stack;
     }
     public void playSound(Player player){
-        player.playSound(SoundEvents.PLAYER_LEVELUP,0.1F,1.0F);
+        player.playSound(SoundEvents.PLAYER_LEVELUP,1.0F,1.0F);
     }
     public void addParticle(){}
 }

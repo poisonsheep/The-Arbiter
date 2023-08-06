@@ -19,7 +19,6 @@ public class SoundRegistry {
     private static RegistryObject<SoundEvent> registerSoundEvent(String name){
         return SOUND_EVENT.register(name , () -> new SoundEvent(new ResourceLocation(TheArbiter.MODID , name)));
     }
-
     public static void register(IEventBus bus) {
         SOUND_EVENT.register(bus);
     }
