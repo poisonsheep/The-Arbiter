@@ -5,7 +5,6 @@ import io.github.poisonsheep.thearbiter.client.particle.ParticlesRegistry;
 import io.github.poisonsheep.thearbiter.client.sound.SoundRegistry;
 import io.github.poisonsheep.thearbiter.entity.EntityRegistry;
 import io.github.poisonsheep.thearbiter.event.ForgeEvent;
-import io.github.poisonsheep.thearbiter.event.blueprint.BlueprintEvent;
 import io.github.poisonsheep.thearbiter.event.blueprint.LearnEvent;
 import io.github.poisonsheep.thearbiter.potion.MobEffectRegistry;
 import net.minecraft.world.level.block.Block;

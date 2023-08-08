@@ -15,7 +15,6 @@ public class SoundRegistry {
     public static final RegistryObject<SoundEvent> ZOOEY = registerSoundEvent("zooey");
 
     public static final RegistryObject<SoundEvent> ARBITER_SWORD_CHARGED = registerSoundEvent("arbiter_sword_charged");
-
     private static RegistryObject<SoundEvent> registerSoundEvent(String name){
         return SOUND_EVENT.register(name , () -> new SoundEvent(new ResourceLocation(TheArbiter.MODID , name)));
     }

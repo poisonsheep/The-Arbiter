@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class PlayerBlueprintProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
-    public static Capability<PlayerBlueprint> PLAYER_BLUEPRINT_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
+    public static Capability<PlayerBlueprint> PLAYER_BLUEPRINT_CAPABILITY = CapabilityManager.get(new CapabilityToken<PlayerBlueprint>() {});
     private PlayerBlueprint blueprint = null;
     private final LazyOptional<PlayerBlueprint> optional = LazyOptional.of(this::createPlayerBlueprint);
 

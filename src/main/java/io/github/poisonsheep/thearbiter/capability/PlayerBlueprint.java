@@ -41,7 +41,7 @@ public class PlayerBlueprint {
         // 把字符串列表设置为玩家的蓝图列表
         setBlueprints(blueprints);
     }
-    public void copyfrom(PlayerBlueprint oldStore) {
+    public void copyFrom(PlayerBlueprint oldStore) {
         this.blueprints = oldStore.blueprints;
     }
 }

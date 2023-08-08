@@ -70,7 +70,7 @@ public class Blueprint extends Item {
             List<String> blueprints = playerBlueprint.getBlueprints();
             // 检查玩家的能力列表中是否包含当前物品的蓝图名称
             if (!blueprints.contains(name.toString())) {
-                // 如果不包含，那么表示玩家没有阅读过这个物品，才执行原来的代码
+                // 如果不包含，那么表示玩家没有阅读过这个物品
                 CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer) player, stack);
                 MinecraftForge.EVENT_BUS.post(new ReadEvent((ServerPlayer)player,stack));
                 player.awardStat(Stats.ITEM_USED.get(this));

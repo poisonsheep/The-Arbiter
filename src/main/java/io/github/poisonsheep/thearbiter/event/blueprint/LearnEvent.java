@@ -17,7 +17,6 @@ public class LearnEvent {
         CompoundTag tag = stack.getTag();
         if(tag != null && tag.contains("blueprint")) {
             String blueprint = tag.getString("blueprint");
-            //在这个if这就崩了
             if(player.getCapability(PlayerBlueprintProvider.PLAYER_BLUEPRINT_CAPABILITY).isPresent()){
                 PlayerBlueprint playerBlueprint = player.getCapability(PlayerBlueprintProvider.PLAYER_BLUEPRINT_CAPABILITY).orElseThrow(() -> new RuntimeException("Player does not have PlayerBlueprint capability"));
                 playerBlueprint.addBluePrints(blueprint);

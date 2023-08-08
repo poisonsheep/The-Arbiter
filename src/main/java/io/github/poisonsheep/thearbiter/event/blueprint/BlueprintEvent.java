@@ -1,5 +1,6 @@
 package io.github.poisonsheep.thearbiter.event.blueprint;
 
+import io.github.poisonsheep.thearbiter.Item.blueprint.BlueprintList;
 import io.github.poisonsheep.thearbiter.TheArbiter;
 import io.github.poisonsheep.thearbiter.capability.PlayerBlueprint;
 import io.github.poisonsheep.thearbiter.capability.PlayerBlueprintProvider;
@@ -23,18 +24,19 @@ public class BlueprintEvent {
             if (!((Player) event.getObject()).getCapability(PlayerBlueprintProvider.PLAYER_BLUEPRINT_CAPABILITY).isPresent()) {
                 // The player does not already have this capability so we need to add the capability provider here
                 event.addCapability(new ResourceLocation(TheArbiter.MODID, "player_blueprints"), new PlayerBlueprintProvider());
+                System.out.println("aaaaaaaaaaaaaa");
             }
         }
     }
     @SubscribeEvent
-    public static void onPlayerCloned(PlayerEvent.Clone event) {
+    public  void onPlayerCloned(PlayerEvent.Clone event) {
         if (event.isWasDeath()) {
-            // We need to copyFrom the capabilities
-            event.getOriginal().getCapability(PlayerBlueprintProvider.PLAYER_BLUEPRINT_CAPABILITY).ifPresent(oldStore -> {
-                event.getPlayer().getCapability(PlayerBlueprintProvider.PLAYER_BLUEPRINT_CAPABILITY).ifPresent(newStore -> {
-                    newStore.copyfrom(oldStore);
-                });
-            });
+            System.out.println("bbbbbbbbbbb");
+            // 在这里不知道为什么检测不到original的capability导致抛出异常，触发方式死一下
+            PlayerBlueprint oldStore = event.getOriginal().getCapability(PlayerBlueprintProvider.PLAYER_BLUEPRINT_CAPABILITY).orElseThrow(() -> new RuntimeException("Player does not have PlayerBlueprint capability"));
+            for (String blueprint : oldStore.getBlueprints()){
+                System.out.println(blueprint);
+            }
         }
     }
 }
