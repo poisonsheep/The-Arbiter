@@ -1,6 +1,6 @@
 package io.github.poisonsheep.thearbiter.event;
 
-import io.github.poisonsheep.thearbiter.Item.blueprint.BlueprintBakedModel;
+import io.github.poisonsheep.thearbiter.client.model.item.blueprint.BlueprintBakedModel;
 import io.github.poisonsheep.thearbiter.Item.blueprint.BlueprintRegistry;
 import io.github.poisonsheep.thearbiter.TheArbiter;
 import io.github.poisonsheep.thearbiter.client.render.entity.RenderZooey;
@@ -22,7 +22,6 @@ public class ModClientEvent {
         //添加渲染注册语句
         event.registerEntityRenderer(EntityRegistry.ZOOEY.get(), RenderZooey::new);
         //event.registerEntityRenderer(EntityInit.DETONATOR_ENTITY.get(), RenderDetonatorEntity::new);
-
     }
     @SubscribeEvent
     public static void onAttributeCreate(EntityAttributeCreationEvent event){
@@ -34,8 +33,6 @@ public class ModClientEvent {
     }
     @SubscribeEvent
     public static void onModelBake(ModelBakeEvent event) {
-        //CocktailModelRegistry.bakeModel(evt);
-        //PlateModelRegistry.bakeModel(evt);
         event.getModelRegistry().put(new ModelResourceLocation(
                 TheArbiter.MODID,
                 "blueprint",

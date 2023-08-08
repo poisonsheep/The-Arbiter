@@ -15,5 +15,4 @@ public class ModServerEvent {
     public static void registerParticleFactory(final ParticleFactoryRegisterEvent event){
         Minecraft.getInstance().particleEngine.register(ParticlesRegistry.SHELTER_PARTICLES.get(), ShelterParticles.Factory::new);
     }
-
 }

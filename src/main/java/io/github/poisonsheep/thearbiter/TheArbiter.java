@@ -5,8 +5,8 @@ import io.github.poisonsheep.thearbiter.client.particle.ParticlesRegistry;
 import io.github.poisonsheep.thearbiter.client.sound.SoundRegistry;
 import io.github.poisonsheep.thearbiter.entity.EntityRegistry;
 import io.github.poisonsheep.thearbiter.event.ForgeEvent;
+import io.github.poisonsheep.thearbiter.event.blueprint.BlueprintEvent;
 import io.github.poisonsheep.thearbiter.event.blueprint.LearnEvent;
-import io.github.poisonsheep.thearbiter.event.blueprint.ReadEvent;
 import io.github.poisonsheep.thearbiter.potion.MobEffectRegistry;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.MinecraftForge;
@@ -21,39 +21,25 @@ import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import software.bernie.geckolib3.GeckoLib;
 
-
 @Mod(TheArbiter.MODID)
 public class TheArbiter
 {
     public static final IEventBus modBusEvent = FMLJavaModLoadingContext.get().getModEventBus();
     public final static String MODID = "the_arbiter";
-
     public TheArbiter()
     {
-
         MinecraftForge.EVENT_BUS.register(new ForgeEvent());
         MinecraftForge.EVENT_BUS.register(new LearnEvent());
-
         modBusEvent.addListener(this::setup);
-
         modBusEvent.addListener(this::enqueueIMC);
-
         modBusEvent.addListener(this::processIMC);
-
         MinecraftForge.EVENT_BUS.register(this);
-
         ItemRegistry.ITEMS.register(modBusEvent);
-
         EntityRegistry.ENTITY_TYPE.register(modBusEvent);
-
         MobEffectRegistry.EFFECT.register(modBusEvent);
-
-        SoundRegistry.register(modBusEvent);
-
         ParticlesRegistry.register(modBusEvent);
-
+        SoundRegistry.register(modBusEvent);
         GeckoLib.initialize();
-
     }
 
     private void setup(final FMLCommonSetupEvent event) {}
