@@ -20,11 +20,6 @@ public class LearnEvent {
             if(player.getCapability(PlayerBlueprintProvider.PLAYER_BLUEPRINT_CAPABILITY).isPresent()){
                 PlayerBlueprint playerBlueprint = player.getCapability(PlayerBlueprintProvider.PLAYER_BLUEPRINT_CAPABILITY).orElseThrow(() -> new RuntimeException("Player does not have PlayerBlueprint capability"));
                 playerBlueprint.addBluePrints(blueprint);
-                List<String> blueprints = playerBlueprint.getBlueprints();
-                // 遍历玩家的蓝图列表，并打印出每个蓝图的名称
-                for (String b : blueprints) {
-                    System.out.println(b);
-                }
             }
         }
     }

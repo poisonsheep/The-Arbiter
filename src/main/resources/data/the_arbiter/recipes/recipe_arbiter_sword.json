@@ -20,5 +20,11 @@
   "result":
   {
     "item": "the_arbiter:arbiter_sword"
-  }
+  },
+  "conditions": [
+    {
+      "type": "the_arbiter:blueprint",
+      "blueprint": "the_arbiter:unknown"
+    }
+  ]
 }

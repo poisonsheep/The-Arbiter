@@ -7,8 +7,10 @@ import io.github.poisonsheep.thearbiter.entity.EntityRegistry;
 import io.github.poisonsheep.thearbiter.event.ForgeEvent;
 import io.github.poisonsheep.thearbiter.event.blueprint.LearnEvent;
 import io.github.poisonsheep.thearbiter.potion.MobEffectRegistry;
+import io.github.poisonsheep.thearbiter.recipe.BlueprintSerializer;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -41,7 +43,8 @@ public class TheArbiter
         GeckoLib.initialize();
     }
 
-    private void setup(final FMLCommonSetupEvent event) {}
+    private void setup(final FMLCommonSetupEvent event) {
+    }
 
     private void enqueueIMC(final InterModEnqueueEvent event) {}
 
