@@ -80,7 +80,6 @@ public class Blueprint extends Item {
             } else {
                 // 如果包含，那么表示玩家已经阅读过这个物品，不要再触发阅读事件和消耗物品
                 // 给玩家一个提示信息
-                player.stopUsingItem();
                 player.sendMessage(new TranslatableComponent("message.the_arbiter.already_read", name).withStyle(ChatFormatting.GOLD), Util.NIL_UUID);
             }
         }

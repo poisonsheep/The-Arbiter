@@ -3,14 +3,10 @@ package io.github.poisonsheep.thearbiter.event.blueprint;
 import io.github.poisonsheep.thearbiter.TheArbiter;
 import io.github.poisonsheep.thearbiter.capability.PlayerBlueprint;
 import io.github.poisonsheep.thearbiter.capability.PlayerBlueprintProvider;
-import io.github.poisonsheep.thearbiter.recipe.BlueprintSerializer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
-import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -41,9 +37,5 @@ public class BlueprintEvent {
                 });
             });
         }
-    }
-    @SubscribeEvent
-    public void registerSerializers(RegistryEvent.Register<RecipeSerializer<?>> event) {
-        CraftingHelper.register(BlueprintSerializer.INSTANCE);
     }
 }
