@@ -28,15 +28,22 @@ public class BlueprintRecipe implements CraftingRecipe {
 
     @Override
     public boolean matches(CraftingContainer container, Level worldIn) {
-        return craftingRecipe.matches(container, worldIn);
+        if(worldIn.isClientSide()) {
+            return false;
+        }
+        for(Player p :worldIn.players()) {
+            if(p.containerMenu == container.menu) {
+                if(isAbleToCraft(p)) {
+                    return craftingRecipe.matches(container, worldIn);
+                }
+            }
+        }
+        return false;
     }
 
     @Override
     public ItemStack assemble(CraftingContainer container) {
-        if(isAbleToCraft()) {
-            return craftingRecipe.assemble(container);
-        }
-        return ItemStack.EMPTY;
+       return craftingRecipe.assemble(container);
     }
 
     //这俩int不知道是啥
@@ -72,9 +79,9 @@ public class BlueprintRecipe implements CraftingRecipe {
     public CraftingRecipe getRecipe() {
         return craftingRecipe;
     }
-    public boolean isAbleToCraft(){
+    public boolean isAbleToCraft(Player player){
         System.out.println("crafting");
-        Player player = ForgeEvent.player;
+//        Player player = ForgeEvent.player;
         if(player != null) {
             System.out.println("Check that the player is crafting");
             PlayerBlueprint playerBlueprint = player.getCapability(PlayerBlueprintProvider.PLAYER_BLUEPRINT_CAPABILITY).orElseThrow(() -> new RuntimeException("Player does not have PlayerBlueprint capability"));
