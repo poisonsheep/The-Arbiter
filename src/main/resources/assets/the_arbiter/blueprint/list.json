@@ -1,6 +1,7 @@
 {
   "blueprints": [
     "the_arbiter:unknown",
-    "the_arbiter:arbiter_sword"
+    "the_arbiter:arbiter_sword",
+    "the_arbiter:dominator"
   ]
 }

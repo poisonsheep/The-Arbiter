@@ -46,10 +46,9 @@ public class BlueprintRecipe implements CraftingRecipe {
        return craftingRecipe.assemble(container);
     }
 
-    //这俩int不知道是啥
     @Override
-    public boolean canCraftInDimensions(int p_43999_, int p_44000_) {
-        return craftingRecipe.canCraftInDimensions(p_43999_, p_44000_);
+    public boolean canCraftInDimensions(int width, int height) {
+        return craftingRecipe.canCraftInDimensions(width, height);
     }
 
     @Override
@@ -80,14 +79,10 @@ public class BlueprintRecipe implements CraftingRecipe {
         return craftingRecipe;
     }
     public boolean isAbleToCraft(Player player){
-        System.out.println("crafting");
 //        Player player = ForgeEvent.player;
         if(player != null) {
-            System.out.println("Check that the player is crafting");
             PlayerBlueprint playerBlueprint = player.getCapability(PlayerBlueprintProvider.PLAYER_BLUEPRINT_CAPABILITY).orElseThrow(() -> new RuntimeException("Player does not have PlayerBlueprint capability"));
             List<String> blueprints = playerBlueprint.getBlueprints();
-            System.out.println(blueprint);
-            System.out.println(blueprints);
             if(blueprints.contains(blueprint)) {
                 System.out.println("true");
                 return true;

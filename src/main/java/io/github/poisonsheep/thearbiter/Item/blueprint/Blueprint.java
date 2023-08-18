@@ -15,6 +15,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
@@ -90,8 +91,11 @@ public class Blueprint extends Item {
         player.getCooldowns().addCooldown(this, 10);
         return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
     }
+
     public void playSound(Player player){
         player.playSound(SoundEvents.PLAYER_LEVELUP,1.0F,1.0F);
     }
+
     public void addParticle(){}
+
 }
