@@ -1,9 +1,9 @@
 package io.github.poisonsheep.thearbiter.event;
 
-
 import io.github.poisonsheep.thearbiter.TheArbiter;
 import io.github.poisonsheep.thearbiter.potion.MobEffectRegistry;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

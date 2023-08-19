@@ -2,8 +2,6 @@ package io.github.poisonsheep.thearbiter.recipe;
 
 import io.github.poisonsheep.thearbiter.capability.PlayerBlueprint;
 import io.github.poisonsheep.thearbiter.capability.PlayerBlueprintProvider;
-import io.github.poisonsheep.thearbiter.event.ForgeEvent;
-import io.github.poisonsheep.thearbiter.event.blueprint.BlueprintEvent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.CraftingContainer;
@@ -84,7 +82,6 @@ public class BlueprintRecipe implements CraftingRecipe {
             PlayerBlueprint playerBlueprint = player.getCapability(PlayerBlueprintProvider.PLAYER_BLUEPRINT_CAPABILITY).orElseThrow(() -> new RuntimeException("Player does not have PlayerBlueprint capability"));
             List<String> blueprints = playerBlueprint.getBlueprints();
             if(blueprints.contains(blueprint)) {
-                System.out.println("true");
                 return true;
             }
         }

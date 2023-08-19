@@ -5,8 +5,11 @@ import io.github.poisonsheep.thearbiter.client.render.item.RenderArbiterSword;
 import io.github.poisonsheep.thearbiter.client.sound.SoundRegistry;
 import io.github.poisonsheep.thearbiter.potion.MobEffectRegistry;
 import io.github.poisonsheep.thearbiter.util.BallUtil;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
@@ -177,6 +180,10 @@ public class ArbiterSword extends SwordItem implements IAnimatable, ISyncable {
     public int getUseDuration(ItemStack stack) {
         //单位tick
         return 20;
+    }
+    @Override
+    public void appendHoverText(ItemStack stack, @javax.annotation.Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
+        tooltip.add(new TranslatableComponent("item.arbiter_sword.description"));
     }
 }
 

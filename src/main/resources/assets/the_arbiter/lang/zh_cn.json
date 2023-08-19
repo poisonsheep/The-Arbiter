@@ -1,5 +1,5 @@
 {
-  "item.the_arbiter.arbiter_sword": "调停者之剑",
+  "item.the_arbiter.arbiter_sword": "§3调停者之剑",
   "effect.the_arbiter.undying": "调停者的庇护",
   "the_arbiter.sound.subtitle.arbiter_sword_use": "使用调停者之剑",
   "the_arbiter.sound.subtitle.arbiter_sword_charged": "调停者之剑充能完毕",
@@ -8,5 +8,6 @@
   "the_arbiter.arbiter_sword": "调停者之剑蓝图",
   "the_arbiter.dominator": "支配者蓝图",
 
-  "message.the_arbiter.already_read": "该蓝图已被掌握"
+  "message.the_arbiter.already_read": "该蓝图已被掌握",
+  "item.arbiter_sword.description": "§5我手中之剑乃映照苍天之明镜，森罗万象之悲戚皆为我所断"
 }

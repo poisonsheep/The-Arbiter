@@ -1,0 +1,14 @@
+{
+  "type": "the_arbiter:blueprint_modifier",
+  "conditions": [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "minecraft:entities/ender_dragon"
+    },
+    {
+      "condition": "minecraft:random_chance",
+      "chance": 0.8
+    }
+  ],
+  "blueprint": "the_arbiter:arbiter_sword"
+}
