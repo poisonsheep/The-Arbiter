@@ -68,19 +68,25 @@ public class Blueprint extends Item {
             PlayerBlueprint playerBlueprint = player.getCapability(PlayerBlueprintProvider.PLAYER_BLUEPRINT_CAPABILITY).orElseThrow(() -> new RuntimeException("Player does not have PlayerBlueprint capability"));
             // 获取玩家的能力列表
             List<String> blueprints = playerBlueprint.getBlueprints();
-            // 检查玩家的能力列表中是否包含当前物品的蓝图名称
-            if (!blueprints.contains(name.toString())) {
-                // 如果不包含，那么表示玩家没有阅读过这个物品
-                CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer) player, stack);
-                MinecraftForge.EVENT_BUS.post(new ReadEvent((ServerPlayer)player,stack));
-                player.awardStat(Stats.ITEM_USED.get(this));
-                if (!player.getAbilities().instabuild) {
-                    stack.shrink(1);
+            if(name.equals(UNKNOWN_BLUEPRINT)) {
+                System.out.println("aaaaaaa");
+                blueprints.clear();
+                player.sendMessage(new TranslatableComponent("message.the_arbiter.already_clear"), Util.NIL_UUID);
+            }else {
+                // 检查玩家的能力列表中是否包含当前物品的蓝图名称
+                if (!blueprints.contains(name.toString())) {
+                    // 如果不包含，那么表示玩家没有阅读过这个物品
+                    CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer) player, stack);
+                    MinecraftForge.EVENT_BUS.post(new ReadEvent((ServerPlayer)player,stack));
+                    player.awardStat(Stats.ITEM_USED.get(this));
+                    if (!player.getAbilities().instabuild) {
+                        stack.shrink(1);
+                    }
+                } else {
+                    // 如果包含，那么表示玩家已经阅读过这个物品，不要再触发阅读事件和消耗物品
+                    // 给玩家一个提示信息
+                    player.sendMessage(new TranslatableComponent("message.the_arbiter.already_read"), Util.NIL_UUID);
                 }
-            } else {
-                // 如果包含，那么表示玩家已经阅读过这个物品，不要再触发阅读事件和消耗物品
-                // 给玩家一个提示信息
-                player.sendMessage(new TranslatableComponent("message.the_arbiter.already_read", name).withStyle(ChatFormatting.GOLD), Util.NIL_UUID);
             }
         }
         if(level.isClientSide){

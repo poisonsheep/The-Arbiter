@@ -8,6 +8,7 @@
   "the_arbiter.arbiter_sword": "调停者之剑蓝图",
   "the_arbiter.dominator": "支配者蓝图",
 
-  "message.the_arbiter.already_read": "该蓝图已被掌握",
+  "message.the_arbiter.already_read": "§5古老的知识已被掌握",
+  "message.the_arbiter.already_clear": "你好像遗忘了什么",
   "item.arbiter_sword.description": "§5我手中之剑乃映照苍天之明镜，森罗万象之悲戚皆为我所断"
 }
