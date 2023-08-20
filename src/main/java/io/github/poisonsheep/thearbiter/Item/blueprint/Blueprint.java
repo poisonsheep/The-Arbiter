@@ -22,6 +22,7 @@ import net.minecraftforge.common.MinecraftForge;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Objects;
 
 public class Blueprint extends Item {
     public static final ResourceLocation UNKNOWN_BLUEPRINT = new ResourceLocation(TheArbiter.MODID, "unknown");
@@ -68,7 +69,7 @@ public class Blueprint extends Item {
             PlayerBlueprint playerBlueprint = player.getCapability(PlayerBlueprintProvider.PLAYER_BLUEPRINT_CAPABILITY).orElseThrow(() -> new RuntimeException("Player does not have PlayerBlueprint capability"));
             // 获取玩家的能力列表
             List<String> blueprints = playerBlueprint.getBlueprints();
-            if(name.equals(UNKNOWN_BLUEPRINT)) {
+            if(Objects.equals(name, UNKNOWN_BLUEPRINT)) {
                 System.out.println("aaaaaaa");
                 blueprints.clear();
                 player.sendMessage(new TranslatableComponent("message.the_arbiter.already_clear"), Util.NIL_UUID);

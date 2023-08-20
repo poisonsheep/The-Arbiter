@@ -7,18 +7,22 @@
     "pattern":
     [
       "A",
-      "A",
-      "B"
+      "B",
+      "C"
     ],
     "key":
     {
       "A":
       {
-        "item": "minecraft:book"
+        "item": "minecraft:nether_star"
       },
       "B":
       {
-        "tag": "forge:dyes/green"
+        "item": "minecraft:heart_of_the_sea"
+      },
+      "C":
+      {
+        "item": "minecraft:end_rod"
       }
     },
     "result":
