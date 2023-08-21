@@ -1,7 +1,7 @@
 {
   "blueprints": [
-    "the_arbiter:unknown",
-    "the_arbiter:arbiter_sword",
-    "the_arbiter:dominator"
+    "the_arbiter:blueprint/unknown",
+    "the_arbiter:blueprint/arbiter_sword",
+    "the_arbiter:blueprint/dominator"
   ]
 }

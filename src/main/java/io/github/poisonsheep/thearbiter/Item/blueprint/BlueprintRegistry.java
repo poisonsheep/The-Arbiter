@@ -38,6 +38,6 @@ public class BlueprintRegistry {
     }
 
     public static ResourceLocation to(ResourceLocation resourceLocation) {
-        return new ResourceLocation(resourceLocation.getNamespace(), "blueprint/" + resourceLocation.getPath());
+        return new ResourceLocation(resourceLocation.getNamespace(), resourceLocation.getPath());
     }
 }

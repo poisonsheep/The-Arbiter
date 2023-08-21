@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Blueprint extends Item {
-    public static final ResourceLocation UNKNOWN_BLUEPRINT = new ResourceLocation(TheArbiter.MODID, "unknown");
+    public static final ResourceLocation UNKNOWN_BLUEPRINT = new ResourceLocation(TheArbiter.MODID, "blueprint/unknown");
     public Blueprint() {
         super(new Properties().stacksTo(1));
         /*
