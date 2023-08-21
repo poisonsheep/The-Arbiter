@@ -1,6 +1,6 @@
 {
   "type": "the_arbiter:blueprint",
-  "blueprint": "the_arbiter:arbiter_sword",
+  "blueprint": "the_arbiter:blueprint/arbiter_sword",
   "who_drops": "minecraft:ender_dragon",
   "recipe": {
     "type": "minecraft:crafting_shaped",
