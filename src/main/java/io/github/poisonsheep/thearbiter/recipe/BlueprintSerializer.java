@@ -22,15 +22,20 @@ public class BlueprintSerializer extends ForgeRegistryEntry<RecipeSerializer<?>>
     @Nullable
     @Override
     public BlueprintRecipe fromNetwork(ResourceLocation blueprintId, FriendlyByteBuf buffer) {
-        ResourceLocation id = buffer.readResourceLocation();
+        //顺序非常重要
+        System.out.println("aaaaaaa");
+        ResourceLocation innerRecipeId = buffer.readResourceLocation();
+        ResourceLocation recipeSerializerId = buffer.readResourceLocation();
+        RecipeSerializer<?> value = ForgeRegistries.RECIPE_SERIALIZERS.getValue(recipeSerializerId);
+        Recipe<?> recipe = value.fromNetwork(innerRecipeId, buffer);
         String blueprint = buffer.readUtf();
-        RecipeSerializer<?> value = ForgeRegistries.RECIPE_SERIALIZERS.getValue(id);
-        Recipe<?> recipe = value.fromNetwork(id, buffer);
+        System.out.println(blueprint);
         return new BlueprintRecipe(blueprintId, blueprint, (CraftingRecipe) recipe);
     }
 
     @Override
     public void toNetwork(FriendlyByteBuf buffer, BlueprintRecipe blueprintRecipe) {
+
         Recipe<CraftingContainer> recipe = blueprintRecipe.getRecipe();
         if(recipe.getSerializer().getRegistryName() == null) {
             throw new IllegalArgumentException("Unable to serialize a recipe serializer without an id: " + recipe.getSerializer());

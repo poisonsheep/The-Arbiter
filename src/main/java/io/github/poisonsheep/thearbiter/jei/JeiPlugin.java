@@ -2,7 +2,6 @@ package io.github.poisonsheep.thearbiter.jei;
 
 import io.github.poisonsheep.thearbiter.TheArbiter;
 import io.github.poisonsheep.thearbiter.recipe.BlueprintRecipe;
-import io.github.poisonsheep.thearbiter.recipe.RecipeRegistry;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.registration.*;
@@ -16,6 +15,7 @@ import java.util.List;
 
 @mezz.jei.api.JeiPlugin
 public class JeiPlugin implements IModPlugin {
+    public static IJeiRuntime runTime;
     public static final ResourceLocation UID = new ResourceLocation(TheArbiter.MODID, "jei_plugin");
 
     public static final RecipeType<BlueprintRecipe> BLUEPRINT_RECIPE= new RecipeType<>(new ResourceLocation(TheArbiter.MODID, "blueprint"), BlueprintRecipe.class);
@@ -29,43 +29,15 @@ public class JeiPlugin implements IModPlugin {
         return UID;
     }
 
-    @Override
-    public void registerCategories(IRecipeCategoryRegistration registration) {
-        IModPlugin.super.registerCategories(registration);
-    }
 
     @Override
     public void registerVanillaCategoryExtensions(IVanillaCategoryExtensionRegistration registration) {
-        IModPlugin.super.registerVanillaCategoryExtensions(registration);
+        registration.getCraftingCategory().addCategoryExtension(BlueprintRecipe.class, BlueprintRecipeExtension::new);
     }
-
-    @Override
-    public void registerRecipes(IRecipeRegistration registration) {
-        registration.addRecipes(BLUEPRINT_RECIPE, getRecipe(RecipeRegistry.BLUEPRINT_RECIPE.get()));
-    }
-
-    @Override
-    public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
-        IModPlugin.super.registerRecipeTransferHandlers(registration);
-    }
-
-    @Override
-    public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
-        IModPlugin.super.registerRecipeCatalysts(registration);
-    }
-
-    @Override
-    public void registerGuiHandlers(IGuiHandlerRegistration registration) {
-        IModPlugin.super.registerGuiHandlers(registration);
-    }
-
-    @Override
-    public void registerAdvanced(IAdvancedRegistration registration) {
-        IModPlugin.super.registerAdvanced(registration);
-    }
-
     @Override
     public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {
-        IModPlugin.super.onRuntimeAvailable(jeiRuntime);
+
+        runTime = jeiRuntime;
+
     }
 }
