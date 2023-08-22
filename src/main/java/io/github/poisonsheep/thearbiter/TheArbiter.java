@@ -8,6 +8,7 @@ import io.github.poisonsheep.thearbiter.event.ForgeEvent;
 import io.github.poisonsheep.thearbiter.event.blueprint.LearnEvent;
 import io.github.poisonsheep.thearbiter.potion.MobEffectRegistry;
 import io.github.poisonsheep.thearbiter.recipe.RecipeRegistry;
+import io.github.poisonsheep.thearbiter.recipe.RecipeSerializerRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -38,6 +39,7 @@ public class TheArbiter
         ParticlesRegistry.register(modBusEvent);
         SoundRegistry.register(modBusEvent);
         RecipeRegistry.register(modBusEvent);
+        RecipeSerializerRegistry.register(modBusEvent);
         GeckoLib.initialize();
     }
 

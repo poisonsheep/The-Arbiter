@@ -61,7 +61,7 @@ public class BlueprintRecipe implements CraftingRecipe {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return RecipeRegistry.BLUEPRINT_SERIALIZER.get();
+        return RecipeSerializerRegistry.BLUEPRINT_SERIALIZER.get();
     }
 
     @Override
