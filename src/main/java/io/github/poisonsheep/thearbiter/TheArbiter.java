@@ -3,7 +3,6 @@ package io.github.poisonsheep.thearbiter;
 import io.github.poisonsheep.thearbiter.Item.ItemRegistry;
 import io.github.poisonsheep.thearbiter.client.particle.ParticlesRegistry;
 import io.github.poisonsheep.thearbiter.client.sound.SoundRegistry;
-import io.github.poisonsheep.thearbiter.entity.EntityRegistry;
 import io.github.poisonsheep.thearbiter.event.ForgeEvent;
 import io.github.poisonsheep.thearbiter.event.blueprint.LearnEvent;
 import io.github.poisonsheep.thearbiter.potion.MobEffectRegistry;
@@ -34,7 +33,6 @@ public class TheArbiter
         modBusEvent.addListener(this::processIMC);
         MinecraftForge.EVENT_BUS.register(this);
         ItemRegistry.ITEMS.register(modBusEvent);
-        EntityRegistry.ENTITY_TYPE.register(modBusEvent);
         MobEffectRegistry.EFFECT.register(modBusEvent);
         ParticlesRegistry.register(modBusEvent);
         SoundRegistry.register(modBusEvent);

@@ -1,11 +1,12 @@
 package io.github.poisonsheep.thearbiter.jei;
 
+import io.github.poisonsheep.thearbiter.Item.blueprint.BlueprintRegistry;
 import io.github.poisonsheep.thearbiter.TheArbiter;
 import io.github.poisonsheep.thearbiter.recipe.BlueprintRecipe;
+import io.github.poisonsheep.thearbiter.recipe.RecipeRegistry;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.registration.*;
-import mezz.jei.api.runtime.IJeiRuntime;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
@@ -15,7 +16,6 @@ import java.util.List;
 
 @mezz.jei.api.JeiPlugin
 public class JeiPlugin implements IModPlugin {
-    public static IJeiRuntime runTime;
     public static final ResourceLocation UID = new ResourceLocation(TheArbiter.MODID, "jei_plugin");
 
     public static final RecipeType<BlueprintRecipe> BLUEPRINT_RECIPE= new RecipeType<>(new ResourceLocation(TheArbiter.MODID, "blueprint"), BlueprintRecipe.class);
@@ -29,15 +29,13 @@ public class JeiPlugin implements IModPlugin {
         return UID;
     }
 
-
     @Override
-    public void registerVanillaCategoryExtensions(IVanillaCategoryExtensionRegistration registration) {
-        registration.getCraftingCategory().addCategoryExtension(BlueprintRecipe.class, BlueprintRecipeExtension::new);
+    public void registerCategories(IRecipeCategoryRegistration registration) {
+        registration.addRecipeCategories(new BlueprintRecipeCategory());
     }
+
     @Override
-    public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {
-
-        runTime = jeiRuntime;
-
+    public void registerRecipes(IRecipeRegistration registration) {
+        registration.addRecipes(BLUEPRINT_RECIPE, getRecipe(RecipeRegistry.BLUEPRINT_RECIPE.get()));
     }
 }

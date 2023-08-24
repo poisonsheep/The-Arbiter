@@ -87,5 +87,4 @@ public class BlueprintRecipe implements CraftingRecipe {
         }
         return false;
     }
-
 }
