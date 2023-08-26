@@ -2,14 +2,14 @@ package io.github.poisonsheep.thearbiter.recipe;
 
 import io.github.poisonsheep.thearbiter.capability.PlayerBlueprint;
 import io.github.poisonsheep.thearbiter.capability.PlayerBlueprintProvider;
+import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingRecipe;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.crafting.IShapedRecipe;
 
 import java.util.List;
 
@@ -18,10 +18,19 @@ public class BlueprintRecipe implements CraftingRecipe {
     private final String blueprint;
     private final CraftingRecipe craftingRecipe;
 
+
+    private int width;
+
+    private int height;
+
     public BlueprintRecipe(ResourceLocation id, String blueprint, CraftingRecipe craftingRecipe){
         this.id = id;
         this.blueprint = blueprint;
         this.craftingRecipe = craftingRecipe;
+        if(craftingRecipe instanceof ShapedRecipe) {
+            this.width = ((IShapedRecipe<CraftingContainer>) craftingRecipe).getRecipeWidth();
+            this.height = ((IShapedRecipe<CraftingContainer>) craftingRecipe).getRecipeHeight();
+        }
     }
 
     @Override
@@ -52,6 +61,11 @@ public class BlueprintRecipe implements CraftingRecipe {
     @Override
     public ItemStack getResultItem() {
         return craftingRecipe.getResultItem();
+    }
+
+    @Override
+    public NonNullList<Ingredient> getIngredients() {
+        return craftingRecipe.getIngredients();
     }
 
     @Override
@@ -86,5 +100,12 @@ public class BlueprintRecipe implements CraftingRecipe {
             }
         }
         return false;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+    public int getHeight() {
+        return height;
     }
 }

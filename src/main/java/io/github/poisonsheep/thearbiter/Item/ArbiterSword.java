@@ -29,6 +29,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.IItemRenderProperties;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.AnimationState;
@@ -56,32 +57,32 @@ public class ArbiterSword extends SwordItem implements IAnimatable, ISyncable {
 
        @Override
        public int getUses() {
-           return 2000;
+           return 2031;
        }
 
        @Override
        public float getSpeed() {
-           return 0;
+           return 1.6f;
        }
 
        @Override
        public float getAttackDamageBonus() {
-           return 0;
+           return 8.0f;
        }
 
        @Override
        public int getLevel() {
-           return 0;
+           return 4;
        }
 
        @Override
        public int getEnchantmentValue() {
-           return 0;
+           return 20;
        }
 
        @Override
        public Ingredient getRepairIngredient() {
-           return null;
+           return Ingredient.of(Tags.Items.NETHER_STARS);
        }
 
        @Nullable
@@ -91,7 +92,7 @@ public class ArbiterSword extends SwordItem implements IAnimatable, ISyncable {
        }
    };
     public ArbiterSword() {
-        super(tier,14,-2.4F,new Properties().tab(CreativeModeTab.TAB_COMBAT));
+        super(tier,6,-2.4F,new Properties().tab(CreativeModeTab.TAB_COMBAT));
         GeckoLibNetwork.registerSyncable(this);
         ballUtil.update_radius(1.5,24);
     }
