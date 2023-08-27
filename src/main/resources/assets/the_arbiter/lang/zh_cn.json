@@ -1,11 +1,11 @@
 {
   "effect.the_arbiter.undying": "调停者的庇护",
   "item.arbiter_sword.description": "§5我手中之剑乃映照苍天之明镜，森罗万象之悲戚皆为我所断",
-  "item.the_arbiter.arbiter_sword": "§3调停者之剑",
+  "item.the_arbiter.arbiter_sword": "§3§l调停者之剑",
   "message.the_arbiter.already_clear": "你好像遗忘了什么",
   "message.the_arbiter.already_read": "§5古老的知识已被掌握",
 
-  "the_arbiter.blueprint/arbiter_sword": "调停者之剑蓝图",
+  "the_arbiter.blueprint/arbiter_sword": "§3§l调停者之剑蓝图",
   "the_arbiter.blueprint/dominator": "支配者蓝图",
   "the_arbiter.blueprint/unknown": "未知蓝图",
 
@@ -13,5 +13,6 @@
   "the_arbiter.sound.subtitle.arbiter_sword_use": "使用调停者之剑",
   "the_arbiter.sound.subtitle.zooey": "佐伊",
 
-  "gui.rs.tip.blueprint": "蓝图合成"
+  "gui.read": "阅读",
+  "gui.unlock": "以解锁"
 }

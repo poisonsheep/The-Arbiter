@@ -70,7 +70,6 @@ public class Blueprint extends Item {
             // 获取玩家的能力列表
             List<String> blueprints = playerBlueprint.getBlueprints();
             if(Objects.equals(name, UNKNOWN_BLUEPRINT)) {
-                System.out.println("aaaaaaa");
                 blueprints.clear();
                 player.sendMessage(new TranslatableComponent("message.the_arbiter.already_clear"), Util.NIL_UUID);
             }else {
