@@ -17,7 +17,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 
-import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
 
@@ -44,14 +43,16 @@ public class BlueprintRecipeExtension extends GuiComponent implements ICraftingC
     @Override
     public void drawInfo(int recipeWidth, int recipeHeight, PoseStack matrixStack, double mouseX, double mouseY) {
         Minecraft minecraft = Minecraft.getInstance();
-        ResourceLocation texture = new ResourceLocation(TheArbiter.MODID, "textures/item/blueprint/unknown.png");
+//        ResourceLocation texture = new ResourceLocation(TheArbiter.MODID, "textures/item/blueprint/unknown.png");
 //        ItemRenderer itemRenderer = minecraft.getItemRenderer();
 //        ItemStack stack = new ItemStack(ItemRegistry.BLUEPRINT.get());
 //        Blueprint.setBluePrint(stack,Blueprint.UNKNOWN_BLUEPRINT);
 //        itemRenderer.renderAndDecorateItem(stack, recipeWidth, recipeHeight);
-        minecraft.font.draw(matrixStack, I18n.get("gui.rs.tip.blueprint"), 2, -11, 0x00000000);
-        TextureManager manager = minecraft.getTextureManager();
-        manager.bindForSetup(texture);
-        blit(matrixStack,10,10,10,10,100,100);
+        String blueprint = recipe.getBlueprint();
+        blueprint = blueprint.replace(":",".");
+        minecraft.font.draw(matrixStack, I18n.get("gui.read")+I18n.get(blueprint)+I18n.get("gui.unlock"), 0, -11, 0x00000000);
+//        TextureManager manager = minecraft.getTextureManager();
+//        manager.bindForSetup(texture);
+//        blit(matrixStack,10,10,10,10,100,100);
     }
 }

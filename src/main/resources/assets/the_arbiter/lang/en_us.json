@@ -13,5 +13,6 @@
   "the_arbiter.sound.subtitle.arbiter_sword_use": "使用调停者之剑",
   "the_arbiter.sound.subtitle.zooey": "佐伊",
 
-  "gui.rs.tip.blueprint": "蓝图合成"
+  "gui.read": "阅读",
+  "gui.unlock": "以解锁"
 }
