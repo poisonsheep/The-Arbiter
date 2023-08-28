@@ -28,11 +28,15 @@ public class Blueprint extends Item {
     public static final ResourceLocation UNKNOWN_BLUEPRINT = new ResourceLocation(TheArbiter.MODID, "blueprint/unknown");
     public Blueprint() {
         super(new Properties().stacksTo(1));
-        /*
-        如果用指令直接give玩家该物品会导致游戏崩溃，bing建议添加这一行，但是没用，还是会崩
-        setBluePrint(this.getDefaultInstance(), UNKNOWN_BLUEPRINT);
-         */
     }
+
+//    @Override
+//    public ItemStack getDefaultInstance() {
+//        ItemStack stack = new ItemStack(this);
+//        setBluePrint(stack, UNKNOWN_BLUEPRINT);
+//        return stack;
+//    }
+
     @Override
     public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> itemStackNonNullList) {
         if (tab == CreativeModeTab.TAB_MISC) {
@@ -79,13 +83,19 @@ public class Blueprint extends Item {
                     CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer) player, stack);
                     MinecraftForge.EVENT_BUS.post(new ReadEvent((ServerPlayer)player,stack));
                     player.awardStat(Stats.ITEM_USED.get(this));
-                    if (!player.getAbilities().instabuild) {
-                        stack.shrink(1);
-                    }
+                    player.sendMessage(new TranslatableComponent("message.the_arbiter.learned"), Util.NIL_UUID);
                 } else {
-                    // 如果包含，那么表示玩家已经阅读过这个物品，不要再触发阅读事件和消耗物品
+                    // 如果包含，那么表示玩家已经阅读过这个物品，不要再触发阅读事件
                     // 给玩家一个提示信息
                     player.sendMessage(new TranslatableComponent("message.the_arbiter.already_read"), Util.NIL_UUID);
+                }
+                //判断玩家是否是创造模式
+                if (!player.getAbilities().instabuild) {
+                    ItemStack paper = new ItemStack(Items.PAPER);
+                    if (!player.getInventory().add(paper)) {
+                        player.drop(paper, false);
+                    }
+                    stack.shrink(1);
                 }
             }
         }

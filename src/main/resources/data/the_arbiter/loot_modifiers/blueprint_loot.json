@@ -10,5 +10,5 @@
       "chance": 0.5
     }
   ],
-  "blueprint": "the_arbiter:arbiter_sword"
+  "blueprint": "the_arbiter:blueprint/arbiter_sword"
 }
