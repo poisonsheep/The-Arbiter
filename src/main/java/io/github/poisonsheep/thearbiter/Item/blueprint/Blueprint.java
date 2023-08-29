@@ -53,9 +53,10 @@ public class Blueprint extends Item {
     @Nullable
     public static ResourceLocation getBlueprint(ItemStack itemStack) {
         if (itemStack.getTag() != null && itemStack.getTag().contains("blueprint")) {
-            return new ResourceLocation(itemStack.getTag().getString("blueprint"));
+            String tag = itemStack.getTag().getString("blueprint");
+            return new ResourceLocation(tag);
         }
-        return null;
+        return UNKNOWN_BLUEPRINT;
     }
     @Override
     public String getDescriptionId(ItemStack stack) {
