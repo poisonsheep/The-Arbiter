@@ -8,6 +8,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.NonNullList;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -29,14 +30,6 @@ public class Blueprint extends Item {
     public Blueprint() {
         super(new Properties().stacksTo(1));
     }
-
-//    @Override
-//    public ItemStack getDefaultInstance() {
-//        ItemStack stack = new ItemStack(this);
-//        setBluePrint(stack, UNKNOWN_BLUEPRINT);
-//        return stack;
-//    }
-
     @Override
     public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> itemStackNonNullList) {
         if (tab == CreativeModeTab.TAB_MISC) {
@@ -66,6 +59,15 @@ public class Blueprint extends Item {
         }
         return super.getDescriptionId(stack);
     }
+
+    @Override
+    public void appendHoverText(ItemStack stack, @org.jetbrains.annotations.Nullable Level level, List<Component> list, TooltipFlag flag) {
+        ResourceLocation name = getBlueprint(stack);
+        if (name != null && level != null) {
+            list.add(new TranslatableComponent(name.toString().replace(":", ".") + ".description"));
+        }
+    }
+
     @Override
     public  InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
@@ -76,7 +78,7 @@ public class Blueprint extends Item {
             List<String> blueprints = playerBlueprint.getBlueprints();
             if(Objects.equals(name, UNKNOWN_BLUEPRINT)) {
                 blueprints.clear();
-                player.sendMessage(new TranslatableComponent("message.the_arbiter.already_clear"), Util.NIL_UUID);
+                player.sendMessage(new TranslatableComponent(name.toString().replace(":", ".") + ".tooltip"), Util.NIL_UUID);
             }else {
                 // 检查玩家的能力列表中是否包含当前物品的蓝图名称
                 if (!blueprints.contains(name.toString())) {
@@ -84,7 +86,7 @@ public class Blueprint extends Item {
                     CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer) player, stack);
                     MinecraftForge.EVENT_BUS.post(new ReadEvent((ServerPlayer)player,stack));
                     player.awardStat(Stats.ITEM_USED.get(this));
-                    player.sendMessage(new TranslatableComponent("message.the_arbiter.learned"), Util.NIL_UUID);
+                    player.sendMessage(new TranslatableComponent(name.toString().replace(":", ".") + ".tooltip"), Util.NIL_UUID);
                 } else {
                     // 如果包含，那么表示玩家已经阅读过这个物品，不要再触发阅读事件
                     // 给玩家一个提示信息

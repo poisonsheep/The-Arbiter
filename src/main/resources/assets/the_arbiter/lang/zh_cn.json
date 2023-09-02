@@ -5,12 +5,18 @@
   "item.the_arbiter.arbiter_sword": "§3§l调停者之剑",
 
   "message.the_arbiter.already_clear": "你选择遗忘",
-  "message.the_arbiter.learned": "§5§l你窥见了古老的奥秘",
   "message.the_arbiter.already_read": "§5§l奇迹不会闪烁两次",
 
   "the_arbiter.blueprint/arbiter_sword": "§3§l调停者之剑蓝图",
+  "the_arbiter.blueprint/arbiter_sword.description": "§m你够资格吗？",
+  "the_arbiter.blueprint/arbiter_sword.tooltip": "§e你见证了真正的力量",
   "the_arbiter.blueprint/dominator": "支配者蓝图",
+  "the_arbiter.blueprint/dominator.description": "支配者蓝图",
+  "the_arbiter.blueprint/dominator.tooltip": "§3犯罪指数§f0",
   "the_arbiter.blueprint/unknown": "未知蓝图",
+  "the_arbiter.blueprint/unknown.description": "§k未知蓝图吃掉了你的脑子",
+  "the_arbiter.blueprint/unknown.tooltip": "愿以此身，受你之痛",
+
 
   "the_arbiter.sound.subtitle.arbiter_sword_charged": "调停者之剑充能完毕",
   "the_arbiter.sound.subtitle.arbiter_sword_use": "使用调停者之剑",
