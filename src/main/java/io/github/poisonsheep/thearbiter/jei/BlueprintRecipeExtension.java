@@ -19,12 +19,9 @@ import java.util.List;
 
 public class BlueprintRecipeExtension extends GuiComponent implements ICraftingCategoryExtension{
     private final BlueprintRecipe recipe;
-
-
     public BlueprintRecipeExtension(BlueprintRecipe recipe) {
         this.recipe = recipe;
     }
-
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, ICraftingGridHelper craftingGridHelper, IFocusGroup focuses) {
         IIngredientType<ItemStack> item = VanillaTypes.ITEM_STACK;
