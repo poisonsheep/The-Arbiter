@@ -18,7 +18,6 @@ public class BlueprintRecipe implements CraftingRecipe {
     private final String blueprint;
     private final CraftingRecipe craftingRecipe;
 
-
     private int width;
 
     private int height;

@@ -115,6 +115,10 @@ public class ArbiterSword extends SwordItem implements IAnimatable, ISyncable {
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player player, InteractionHand hand) {
        //进行使用动作
         player.startUsingItem(hand);
+        for (int i = 0; i < BallUtil.max; i++) {
+            BallUtil.Position position = BallUtil.getPosition(i);
+            player.level.addParticle(ParticlesRegistry.SHELTER_PARTICLES.get(),player.getX() + position.x,player.getY() + position.y + 1.2,player.getZ() + position.z,player.getX(),player.getY(),player.getZ());
+        }
         if(!worldIn.isClientSide){
             BlockPos blockpos = player.blockPosition();
             List<LivingEntity> entities = worldIn.getEntitiesOfClass(LivingEntity.class,new AABB(blockpos).inflate(20));
@@ -144,10 +148,6 @@ public class ArbiterSword extends SwordItem implements IAnimatable, ISyncable {
         }
         if(worldIn.isClientSide){
             player.playSound(SoundRegistry.ZOOEY.get(),1f,1f);
-            for (int i = 0; i < BallUtil.max; i++) {
-                BallUtil.Position position = BallUtil.getPosition(i);
-                player.level.addParticle(ParticlesRegistry.SHELTER_PARTICLES.get(),player.getX() + position.x,player.getY() + position.y + 1.2,player.getZ() + position.z,player.getX(),player.getY(),player.getZ());
-            }
         }
         return super.use(worldIn, player, hand);
     }

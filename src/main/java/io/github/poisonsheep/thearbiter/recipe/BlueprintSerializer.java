@@ -23,7 +23,6 @@ public class BlueprintSerializer extends ForgeRegistryEntry<RecipeSerializer<?>>
     @Override
     public BlueprintRecipe fromNetwork(ResourceLocation blueprintId, FriendlyByteBuf buffer) {
         //顺序非常重要
-        System.out.println("aaaaaaa");
         ResourceLocation innerRecipeId = buffer.readResourceLocation();
         ResourceLocation recipeSerializerId = buffer.readResourceLocation();
         RecipeSerializer<?> value = ForgeRegistries.RECIPE_SERIALIZERS.getValue(recipeSerializerId);
