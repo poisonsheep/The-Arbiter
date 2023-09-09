@@ -1,7 +1,7 @@
 package io.github.poisonsheep.thearbiter.event;
 
 import io.github.poisonsheep.thearbiter.client.model.item.blueprint.BlueprintBakedModel;
-import io.github.poisonsheep.thearbiter.Item.blueprint.BlueprintRegistry;
+import io.github.poisonsheep.thearbiter.client.blueprint.BlueprintRegistry;
 import io.github.poisonsheep.thearbiter.TheArbiter;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;

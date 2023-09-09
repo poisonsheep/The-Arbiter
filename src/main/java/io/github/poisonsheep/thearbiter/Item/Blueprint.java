@@ -1,11 +1,11 @@
-package io.github.poisonsheep.thearbiter.Item.blueprint;
+package io.github.poisonsheep.thearbiter.Item;
 
 import io.github.poisonsheep.thearbiter.Item.ItemRegistry;
 import io.github.poisonsheep.thearbiter.TheArbiter;
 import io.github.poisonsheep.thearbiter.capability.PlayerBlueprint;
 import io.github.poisonsheep.thearbiter.capability.PlayerBlueprintProvider;
+import io.github.poisonsheep.thearbiter.client.blueprint.BlueprintList;
 import io.github.poisonsheep.thearbiter.event.blueprint.ReadEvent;
-import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.NonNullList;

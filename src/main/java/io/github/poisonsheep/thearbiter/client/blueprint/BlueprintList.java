@@ -1,4 +1,4 @@
-package io.github.poisonsheep.thearbiter.Item.blueprint;
+package io.github.poisonsheep.thearbiter.client.blueprint;
 
 import java.util.ArrayList;
 import java.util.List;

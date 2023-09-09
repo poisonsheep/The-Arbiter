@@ -1,4 +1,4 @@
-package io.github.poisonsheep.thearbiter.Item.blueprint;
+package io.github.poisonsheep.thearbiter.client.blueprint;
 
 import io.github.poisonsheep.thearbiter.util.JsonUtil;
 import net.minecraft.client.Minecraft;

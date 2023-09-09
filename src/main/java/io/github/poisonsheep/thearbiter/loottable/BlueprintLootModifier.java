@@ -2,7 +2,7 @@ package io.github.poisonsheep.thearbiter.loottable;
 
 import com.google.gson.JsonObject;
 import io.github.poisonsheep.thearbiter.Item.ItemRegistry;
-import io.github.poisonsheep.thearbiter.Item.blueprint.Blueprint;
+import io.github.poisonsheep.thearbiter.Item.Blueprint;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;

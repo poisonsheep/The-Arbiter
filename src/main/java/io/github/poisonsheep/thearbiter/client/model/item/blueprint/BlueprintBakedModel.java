@@ -1,6 +1,6 @@
 package io.github.poisonsheep.thearbiter.client.model.item.blueprint;
 
-import io.github.poisonsheep.thearbiter.Item.blueprint.Blueprint;
+import io.github.poisonsheep.thearbiter.Item.Blueprint;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.block.model.BakedQuad;
@@ -18,7 +18,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import static io.github.poisonsheep.thearbiter.Item.blueprint.BlueprintRegistry.to;
+import static io.github.poisonsheep.thearbiter.client.blueprint.BlueprintRegistry.to;
 
 
 /**

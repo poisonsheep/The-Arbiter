@@ -1,6 +1,5 @@
 package io.github.poisonsheep.thearbiter.Item;
 
-import io.github.poisonsheep.thearbiter.Item.blueprint.Blueprint;
 import io.github.poisonsheep.thearbiter.TheArbiter;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
