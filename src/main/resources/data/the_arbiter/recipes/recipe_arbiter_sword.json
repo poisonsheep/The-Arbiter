@@ -1,32 +1,29 @@
 {
   "type": "the_arbiter:blueprint",
-  "blueprint": "the_arbiter:blueprint/arbiter_sword",
-  "recipe": {
-    "type": "minecraft:crafting_shaped",
-    "pattern":
-    [
-      "A",
-      "B",
-      "C"
+  "blueprint": "extra_blueprint:blueprint/engineer_manuscript",
+  "recipe":{
+    "type": "sophisticatedbackpacks:backpack_upgrade",
+    "conditions": [
+      {
+        "itemRegistryName": "sophisticatedbackpacks:gold_backpack",
+        "type": "sophisticatedcore:item_enabled"
+      }
     ],
-    "key":
-    {
-      "A":
-      {
-        "item": "minecraft:nether_star"
+    "pattern": [
+      "GGG",
+      "GBG",
+      "GGG"
+    ],
+    "key": {
+      "G": {
+        "tag": "forge:ingots/gold"
       },
-      "B":
-      {
-        "item": "minecraft:heart_of_the_sea"
-      },
-      "C":
-      {
-        "item": "minecraft:end_rod"
+      "B": {
+        "item": "sophisticatedbackpacks:iron_backpack"
       }
     },
-    "result":
-    {
-      "item": "the_arbiter:arbiter_sword"
+    "result": {
+      "item": "sophisticatedbackpacks:gold_backpack"
     }
   }
 }

@@ -1,4 +1,4 @@
-package io.github.poisonsheep.thearbiter.jei;
+package io.github.poisonsheep.thearbiter.compat.jei;
 
 import io.github.poisonsheep.thearbiter.Item.ItemRegistry;
 import io.github.poisonsheep.thearbiter.Item.blueprint.Blueprint;

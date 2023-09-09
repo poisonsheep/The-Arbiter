@@ -1,4 +1,4 @@
-package io.github.poisonsheep.thearbiter.jei;
+package io.github.poisonsheep.thearbiter.compat.jei;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import io.github.poisonsheep.thearbiter.recipe.BlueprintRecipe;

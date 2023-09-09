@@ -1,5 +1,6 @@
 package io.github.poisonsheep.thearbiter.Item.blueprint;
 
+import io.github.poisonsheep.thearbiter.Item.ItemRegistry;
 import io.github.poisonsheep.thearbiter.TheArbiter;
 import io.github.poisonsheep.thearbiter.capability.PlayerBlueprint;
 import io.github.poisonsheep.thearbiter.capability.PlayerBlueprintProvider;
@@ -32,7 +33,7 @@ public class Blueprint extends Item {
     }
     @Override
     public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> itemStackNonNullList) {
-        if (tab == CreativeModeTab.TAB_MISC) {
+        if (tab == ItemRegistry.BLUEPRINT_TAB) {
             for (String blueprint : BlueprintList.INSTANCE.blueprints) {
                 ItemStack stack = new ItemStack(this);
                 setBluePrint(stack, new ResourceLocation(blueprint));
