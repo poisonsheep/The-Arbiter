@@ -42,6 +42,10 @@ public class BlueprintRecipeExtension extends GuiComponent implements ICraftingC
 //        ItemStack stack = new ItemStack(ItemRegistry.BLUEPRINT.get());
 //        Blueprint.setBluePrint(stack,Blueprint.UNKNOWN_BLUEPRINT);
 //        itemRenderer.renderAndDecorateItem(stack, recipeWidth, recipeHeight);
+        System.out.println(recipeWidth);
+        System.out.println(recipeHeight);
+        System.out.println(mouseX);
+        System.out.println(mouseY);
         String blueprint = recipe.getBlueprint();
         blueprint = blueprint.replace(":",".");
         minecraft.font.draw(matrixStack, I18n.get("gui.read")+I18n.get(blueprint)+I18n.get("gui.unlock"), 0, -11, 0x00000000);
