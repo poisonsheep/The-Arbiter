@@ -17,9 +17,7 @@ public class BlueprintRecipe implements CraftingRecipe {
     private final ResourceLocation id;
     private final String blueprint;
     private final CraftingRecipe craftingRecipe;
-
     private int width;
-
     private int height;
 
     public BlueprintRecipe(ResourceLocation id, String blueprint, CraftingRecipe craftingRecipe){
@@ -64,7 +62,8 @@ public class BlueprintRecipe implements CraftingRecipe {
 
     @Override
     public NonNullList<Ingredient> getIngredients() {
-        return craftingRecipe.getIngredients();
+        ShapedRecipe shapedRecipe = (ShapedRecipe)craftingRecipe;
+        return shapedRecipe.getIngredients();
     }
 
     @Override

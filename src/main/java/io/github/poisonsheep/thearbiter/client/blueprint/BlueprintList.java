@@ -6,5 +6,5 @@ import java.util.List;
 public class BlueprintList {
     public static final BlueprintList INSTANCE = new BlueprintList();
     private BlueprintList() {}
-    public List<String> blueprints = new ArrayList<>();
+    public final List<String> blueprints = new ArrayList<>();
 }

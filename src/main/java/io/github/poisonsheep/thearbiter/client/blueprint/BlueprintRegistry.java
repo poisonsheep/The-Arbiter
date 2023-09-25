@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
-//这部分也看不太懂，如果看懂的话可以帮我打一些注释
 public class BlueprintRegistry {
     public static void register(ModelRegistryEvent event) {
         ResourceManager manager = Minecraft.getInstance().getResourceManager();

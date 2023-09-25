@@ -4,13 +4,19 @@ import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import io.github.poisonsheep.thearbiter.TheArbiter;
+import io.github.poisonsheep.thearbiter.recipe.SpecialRecipeInGuideBook;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -56,12 +62,12 @@ public class BlueprintAnthologyScreen extends BasicBookScreen {
         RenderSystem.setShaderTexture(0, BOOK_TEXTURES);
         float scale = 1F;
         poseStack.scale(scale, scale, 0);
-
-        // We need to scale the position by the scale of the matrix to match the coordinates.
         float toolTipMaxWidthScaled = (this.toolTipMaxWidth) / scale;
         blit(poseStack, Math.round(this.leftPos + (IMAGE_WIDTH / 2 - toolTipMaxWidthScaled) / 2) + 30 , Math.round(this.bottomPos + 25), 0, 64, 64, 64);
         poseStack.popPose();
     }
+
+
     @NotNull
     public static Button.OnTooltip makeButtonToolTip(Component component, Screen screen) {
         return makeButtonToolTip(component, screen, button -> button.active);

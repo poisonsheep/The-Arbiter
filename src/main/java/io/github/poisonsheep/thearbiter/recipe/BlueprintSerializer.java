@@ -1,6 +1,7 @@
 package io.github.poisonsheep.thearbiter.recipe;
 
 import com.google.gson.JsonObject;
+import io.github.poisonsheep.thearbiter.client.gui.RecipeData;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -15,6 +16,9 @@ public class BlueprintSerializer extends ForgeRegistryEntry<RecipeSerializer<?>>
     public BlueprintRecipe fromJson(ResourceLocation id, JsonObject json) {
         String blueprint = GsonHelper.getAsString(json, "blueprint");
         Recipe<?> recipe = RecipeManager.fromJson(id, GsonHelper.getAsJsonObject(json, "recipe"));
+        //这部分用于指引书的配方gui渲染
+        RecipeData data = new RecipeData(blueprint, recipe);
+        RecipeDataList.INSTANCE.recipeData.add(data);
         return new BlueprintRecipe(id, blueprint, (CraftingRecipe) recipe);
     }
 
