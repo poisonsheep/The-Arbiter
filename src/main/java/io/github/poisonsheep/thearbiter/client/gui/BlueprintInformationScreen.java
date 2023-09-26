@@ -10,19 +10,23 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.core.NonNullList;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingRecipe;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.ShapedRecipe;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 public class BlueprintInformationScreen extends BasicBookScreen{
 
-    private String blueprint;
+    private final String blueprint;
     private final Screen parent;
     int toolTipMaxWidth;
     protected final List<RecipeData> recipes = RecipeDataList.INSTANCE.recipeData;
@@ -43,9 +47,9 @@ public class BlueprintInformationScreen extends BasicBookScreen{
     public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
         super.render(poseStack, mouseX, mouseY, partialTick);
         renderGui(poseStack);
-        putMap();
         Minecraft.getInstance().font.draw(poseStack, this.getTitle(), this.leftPos + Math.round(this.IMAGE_WIDTH / 4) - 24, this.bottomPos + Math.round(this.IMAGE_HEIGHT / 2) -64, 1);
-        renderRecipeWidget();
+        putMap(poseStack, mouseX, mouseY);
+        renderRecipeWidget(poseStack, mouseX, mouseY);
     }
 
     private void renderGui(PoseStack poseStack) {
@@ -60,16 +64,46 @@ public class BlueprintInformationScreen extends BasicBookScreen{
         poseStack.popPose();
     }
 
-    private void putMap() {
+    private void putMap(PoseStack poseStack, int mouseX, int mouseY) {
         ItemStack stack = new ItemStack(ItemRegistry.BLUEPRINT.get());
         Blueprint.setBluePrint(stack, new ResourceLocation(blueprint));
+        ItemWidget itemWidget = new ItemWidget(stack, this.itemRenderer, this.leftPos + Math.round(this.IMAGE_WIDTH / 4) - 8 , this.bottomPos + Math.round(this.IMAGE_HEIGHT / 2) -24, 16, 16, button -> {});
+        renderTooltip(poseStack ,itemWidget, mouseX, mouseY);
+        //按理说ItemWidget带有渲染功能，但是不知道为什么不显示
         this.itemRenderer.renderAndDecorateItem(stack,this.leftPos + Math.round(this.IMAGE_WIDTH / 4) - 8 ,this.bottomPos + Math.round(this.IMAGE_HEIGHT / 2) -24);
     }
+    private static void forEach(ItemWidget widgets, Consumer<ItemWidget> widget) {
+        widgets.visible = true;
+        widgets.active = true;
+        widget.accept(widgets);
+    }
 
+    public void renderTooltip(PoseStack stack, ItemWidget itemWidget,int mouseX, int mouseY) {
+        forEach(itemWidget, ItemWidget -> {
+            if (ItemWidget.isMouseOver(mouseX, mouseY)) {
+                List<Component> tooltipLines = ItemWidget.stack.getTooltipLines(Minecraft.getInstance().player, this.minecraft.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL);
+                if (ItemWidget.hasAdditonalInfo) {
+                    tooltipLines.add(1, new TextComponent("Click for more info"));
+                }
+                this.renderTooltip(stack, tooltipLines, ItemWidget.stack.getTooltipImage(), mouseX, mouseY);
+            }
+        });
+    }
     //citadel渲染合成配方的方法
-    protected void renderRecipe(PoseStack poseStack, Recipe<?> recipe) {
+    protected void renderRecipe(PoseStack poseStack, Recipe<?> recipe, int mouseX, int mouseY) {
+        int width = 3;
+        int hight = 3;
+        int initialX = this.leftPos + Math.round(this.IMAGE_WIDTH * 1 / 2) + 8;
+        int initialY = this.bottomPos + Math.round(this.IMAGE_HEIGHT / 3);
+        boolean move = false;
+        if(recipe instanceof ShapedRecipe) {
+            width = ((ShapedRecipe) recipe).getWidth();
+            hight = ((ShapedRecipe) recipe).getHeight();
+            if(width == 1 && hight == 3) {
+                move = true;
+            }
+        }
         int playerTicks = Minecraft.getInstance().player.tickCount;
-        float scale = 1F;
         NonNullList<Ingredient> ingredients = recipe instanceof SpecialRecipeInGuideBook ? ((SpecialRecipeInGuideBook)recipe).getDisplayIngredients() : recipe.getIngredients();
         NonNullList<ItemStack> displayedStacks = NonNullList.create();
         for (int i = 0; i < ingredients.size(); i++) {
@@ -85,36 +119,37 @@ public class BlueprintInformationScreen extends BasicBookScreen{
             }
             if (!stack.isEmpty()) {
                 poseStack.pushPose();
-                poseStack.translate(this.leftPos, this.bottomPos, 32.0F);
-                poseStack.translate((int) (3 + (i % 3) * 20 * scale), (int) (3 + (i / 3) * 20 * scale), 0);
-                poseStack.scale(scale, scale, scale);
+                int Xmove = 3 + (i % width) * 20;
+                int Ymove = 3 + (i / width) * 20;
+                if(move) {
+                    Xmove += 23;
+                }
                 this.itemRenderer.blitOffset = 100.0F;
-                this.itemRenderer.renderAndDecorateItem(stack, 0, 0);
+                this.itemRenderer.renderAndDecorateItem(stack, initialX + Xmove, initialY + Ymove);
                 this.itemRenderer.blitOffset = 0.0F;
-                poseStack.popPose();
+                ItemWidget itemWidget = new ItemWidget(stack, this.itemRenderer, initialX + Xmove, initialY + Ymove, 16, 16, button -> {});
+                renderTooltip(poseStack ,itemWidget, mouseX, mouseY);
             }
             displayedStacks.add(i, stack);
         }
-        poseStack.pushPose();
-        poseStack.translate(this.leftPos, this.bottomPos, 32.0F);
-        float finScale = scale * 1.5F;
-        poseStack.translate(3 + 70 * finScale, 3 + 10 * finScale, 0);
-        poseStack.scale(finScale, finScale, finScale);
+        float Scale = 1.5F;
+        int resultItemMoveX = 3 + Math.round(70 * Scale - 28);
+        int resultItemMoveY = Math.round(3 + 10 * Scale);
         this.itemRenderer.blitOffset = 100.0F;
         ItemStack result = recipe.getResultItem();
         if(recipe instanceof SpecialRecipeInGuideBook){
             result = ((SpecialRecipeInGuideBook) recipe).getDisplayResultFor(displayedStacks);
         }
-        this.itemRenderer.renderAndDecorateItem(result, 0, 0);
+        this.itemRenderer.renderAndDecorateItem(result, initialX + resultItemMoveX, initialY + resultItemMoveY);
         this.itemRenderer.blitOffset = 0.0F;
-        poseStack.popPose();
+        ItemWidget itemWidget = new ItemWidget(result, this.itemRenderer, initialX + resultItemMoveX, initialY + resultItemMoveY, 16, 16, button -> {});
+        renderTooltip(poseStack ,itemWidget, mouseX, mouseY);
     }
 
-    public void renderRecipeWidget() {
+    public void renderRecipeWidget(PoseStack poseStack, int mouseX, int mouseY) {
         Recipe<?> recipe = getRecipe(this.blueprint);
         if (recipe != null) {
-            PoseStack poseStack = RenderSystem.getModelViewStack();
-            renderRecipe(poseStack, recipe);
+            renderRecipe(poseStack, recipe, mouseX, mouseY);
         }
     }
 
