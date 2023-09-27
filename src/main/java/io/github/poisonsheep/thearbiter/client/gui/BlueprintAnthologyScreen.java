@@ -4,30 +4,22 @@ import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import io.github.poisonsheep.thearbiter.TheArbiter;
-import io.github.poisonsheep.thearbiter.recipe.SpecialRecipeInGuideBook;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.Recipe;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.function.Predicate;
 
 public class BlueprintAnthologyScreen extends BasicBookScreen {
-
     public static final ResourceLocation BLUEPRINT_ANTHOLOGY_TEXTURE = new ResourceLocation(TheArbiter.MODID,"textures/gui/blueprint_anthology_gui.png");
     public static final ResourceLocation BOOK_TEXTURES = new ResourceLocation(TheArbiter.MODID, "textures/gui/ui.png");
     int toolTipMaxWidth;
-
     private WidgetList widgets;
     public BlueprintAnthologyScreen(Component component) {
         super(component);
@@ -40,7 +32,7 @@ public class BlueprintAnthologyScreen extends BasicBookScreen {
         int buttonWidth = (IMAGE_WIDTH - 10) / 3;
         int buttonHeight = 20;
         Button blueprint = new Button(0, this.topPos, buttonWidth, buttonHeight, new TranslatableComponent(TheArbiter.MODID),
-                button -> this.minecraft.setScreen(new BlueprintViewScreen(this)), makeButtonToolTip(new TranslatableComponent("biomepedia.intro.options.blocksanditems.hover"), this));
+                button -> this.minecraft.setScreen(new BlueprintViewScreen(this)), makeButtonToolTip(new TranslatableComponent(""), this));
         int listRenderedHeight = IMAGE_HEIGHT + this.bottomPos;
         List<AbstractWidget> buttons = ImmutableList.of(blueprint);
         this.widgets = new WidgetList(buttons, buttonWidth + 9, listRenderedHeight + 20, this.bottomPos + 15, listRenderedHeight - 15, buttonHeight + 4);
