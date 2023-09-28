@@ -32,28 +32,22 @@ public class BlueprintViewScreen extends BasicBookScreen{
         super.init();
         createMenu();
         load(this.page);
-
-        PageButton pageBack = new PageButton(this.leftPos + 5, this.topPos - 15, false, button -> {
+        PageButton pageBack = new PageButton(this.leftPos + 18, this.topPos - 36, false, button -> {
             unload(page);
             this.page = page == 0 ? maxPagePairCount - 1 : (page - 1) % maxPagePairCount;
             load(this.page);
         }, true);
         this.addRenderableWidget(pageBack);
-        pageBack.x = this.leftPos + 15;
-        pageBack.y = this.topPos - pageBack.getHeight() - 13;
-
-        PageButton pageForward = new PageButton(this.rightPos - 5, this.topPos - 15, true, button -> {
+        PageButton pageForward = new PageButton(this.rightPos - 42, this.topPos - 36, true, button -> {
             unload(page);
             this.page = (page + 1) % maxPagePairCount;
             load(this.page);
         }, true);
         this.addRenderableWidget(pageForward);
-        pageForward.x = this.rightPos - pageBack.getWidth() - 22;
-        pageForward.y = this.topPos - pageBack.getHeight() - 13;
     }
 
     private void createMenu() {
-        createMenu(7, 10);
+        createMenu(6, 10);
     }
 
     private void createMenu(int rowLength, int columnLength) {
@@ -76,7 +70,7 @@ public class BlueprintViewScreen extends BasicBookScreen{
                         if (registryIdx > blueprints.size() - 1) {
                             break;
                         }
-                        String blueprint = blueprints.get(columnIdx);
+                        String blueprint = blueprints.get(registryIdx);
                         ItemStack stack = new ItemStack(ItemRegistry.BLUEPRINT.get());
                         Blueprint.setBluePrint(stack, new ResourceLocation(blueprint));
                         ItemWidget itemWidget = new ItemWidget(stack, this.itemRenderer, xOffset + startX, yOffset, buttonSize, buttonSize, button -> {

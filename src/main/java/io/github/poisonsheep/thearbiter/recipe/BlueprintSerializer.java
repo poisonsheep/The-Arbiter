@@ -5,8 +5,10 @@ import io.github.poisonsheep.thearbiter.client.gui.RecipeData;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
-import net.minecraft.world.inventory.CraftingContainer;
-import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.item.crafting.CraftingRecipe;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import org.jetbrains.annotations.Nullable;
@@ -32,14 +34,15 @@ public class BlueprintSerializer extends ForgeRegistryEntry<RecipeSerializer<?>>
         RecipeSerializer<?> value = ForgeRegistries.RECIPE_SERIALIZERS.getValue(recipeSerializerId);
         Recipe<?> recipe = value.fromNetwork(innerRecipeId, buffer);
         String blueprint = buffer.readUtf();
-        System.out.println(blueprint);
+        RecipeData data = new RecipeData(blueprint, recipe);
+        RecipeDataList.INSTANCE.recipeData.add(data);
         return new BlueprintRecipe(blueprintId, blueprint, (CraftingRecipe) recipe);
     }
 
     @Override
     public void toNetwork(FriendlyByteBuf buffer, BlueprintRecipe blueprintRecipe) {
 
-        Recipe<CraftingContainer> recipe = blueprintRecipe.getRecipe();
+        Recipe<?> recipe = blueprintRecipe.getRecipe();
         if(recipe.getSerializer().getRegistryName() == null) {
             throw new IllegalArgumentException("Unable to serialize a recipe serializer without an id: " + recipe.getSerializer());
         }

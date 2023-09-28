@@ -59,7 +59,6 @@ public class BlueprintAnthologyScreen extends BasicBookScreen {
         poseStack.popPose();
     }
 
-
     @NotNull
     public static Button.OnTooltip makeButtonToolTip(Component component, Screen screen) {
         return makeButtonToolTip(component, screen, button -> button.active);

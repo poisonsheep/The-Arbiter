@@ -43,7 +43,6 @@ public class BlueprintInformationScreen extends BasicBookScreen{
         recipes = getRecipe(blueprint);
         renderRecipe = !recipes.isEmpty();
     }
-
     private static void forEach(ItemWidget[][] widgets, Consumer<ItemWidget> widget) {
         for (ItemWidget[] widgetsPage : widgets) {
             for(ItemWidget itemWidget : widgetsPage) {
@@ -60,7 +59,7 @@ public class BlueprintInformationScreen extends BasicBookScreen{
         if(renderRecipe) {
             createRecipeMenu();
             load(this.page);
-            PageButton pageForward = new PageButton(this.rightPos - 25, this.topPos - 25, true, button -> {
+            PageButton pageForward = new PageButton(this.leftPos + IMAGE_WIDTH / 2 + 93, this.bottomPos + 130, true, button -> {
                 unload(page);
                 this.page = (page + 1) % recipes.size();
                 load(this.page);
@@ -69,31 +68,30 @@ public class BlueprintInformationScreen extends BasicBookScreen{
         }
     }
 
-    private void renderGui(PoseStack poseStack) {
+    private void putMap() {
+        ItemStack stack = new ItemStack(ItemRegistry.BLUEPRINT.get());
+        Blueprint.setBluePrint(stack, new ResourceLocation(blueprint));
+        //按理说ItemWidget带有渲染功能，但是不知道为什么不显示
+        this.itemRenderer.renderAndDecorateItem(stack,this.leftPos + this.IMAGE_WIDTH / 4 - 8 ,this.bottomPos + Math.round(this.IMAGE_HEIGHT / 2) -24);
+    }
+
+    private void putNote(PoseStack poseStack) {
         poseStack.pushPose();
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1, 1, 1, 1);
         RenderSystem.setShaderTexture(0, BlueprintAnthologyScreen.BOOK_TEXTURES);
         float scale = 1F;
         poseStack.scale(scale, scale, 0);
-        float toolTipMaxWidthScaled = (this.toolTipMaxWidth) / scale;
-        blit(poseStack, Math.round(this.leftPos + (IMAGE_WIDTH / 2 - toolTipMaxWidthScaled) / 2) + 25 , Math.round(this.bottomPos + 30), 0, 128, 128, 128);
+        blit(poseStack, this.leftPos + IMAGE_WIDTH / 2 + 10, this.bottomPos + 42, 0, 128, 110, 127);
         poseStack.popPose();
-    }
-
-    private void putMap(PoseStack poseStack, int mouseX, int mouseY) {
-        ItemStack stack = new ItemStack(ItemRegistry.BLUEPRINT.get());
-        Blueprint.setBluePrint(stack, new ResourceLocation(blueprint));
-        //按理说ItemWidget带有渲染功能，但是不知道为什么不显示
-        this.itemRenderer.renderAndDecorateItem(stack,this.leftPos + Math.round(this.IMAGE_WIDTH / 4) - 8 ,this.bottomPos + Math.round(this.IMAGE_HEIGHT / 2) -24);
     }
 
     @Override
     public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
         super.render(poseStack, mouseX, mouseY, partialTick);
-        renderGui(poseStack);
         Minecraft.getInstance().font.draw(poseStack, this.getTitle(), this.leftPos + Math.round(this.IMAGE_WIDTH / 4) - 24, this.bottomPos + Math.round(this.IMAGE_HEIGHT / 2) -64, 1);
-        putMap(poseStack, mouseX, mouseY);
+        putMap();
+        putNote(poseStack);
         if(renderRecipe) {
             renderRecipe(poseStack, mouseX, mouseY);
         }
@@ -121,7 +119,7 @@ public class BlueprintInformationScreen extends BasicBookScreen{
             Recipe<?> recipe = recipeList.get(page);
             int width = 3;
             int hight = 3;
-            int initialX = this.leftPos + Math.round(this.IMAGE_WIDTH * 1 / 2) + 8;
+            int initialX = this.leftPos + Math.round(this.IMAGE_WIDTH * 1 / 2) + 14;
             int initialY = this.bottomPos + Math.round(this.IMAGE_HEIGHT / 3);
             boolean move = false;
             if(recipe instanceof ShapedRecipe) {
@@ -156,7 +154,7 @@ public class BlueprintInformationScreen extends BasicBookScreen{
             }
             float Scale = 1.5F;
             int resultItemMoveX = 3 + Math.round(70 * Scale - 28);
-            int resultItemMoveY = Math.round(3 + 10 * Scale);
+            int resultItemMoveY = Math.round(3 + 10 * Scale + 7);
             ItemStack result = recipe.getResultItem();
             ItemWidget itemWidget = new ItemWidget(result, this.itemRenderer, initialX + resultItemMoveX, initialY + resultItemMoveY, 16, 16, button -> {});
             pagePair[ingredients.size()] = this.addRenderableWidget(itemWidget);

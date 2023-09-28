@@ -62,8 +62,7 @@ public class BlueprintRecipe implements CraftingRecipe {
 
     @Override
     public NonNullList<Ingredient> getIngredients() {
-        ShapedRecipe shapedRecipe = (ShapedRecipe)craftingRecipe;
-        return shapedRecipe.getIngredients();
+        return craftingRecipe.getIngredients();
     }
 
     @Override
