@@ -1,8 +1,10 @@
 package io.github.poisonsheep.thearbiter.client.gui;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import io.github.poisonsheep.thearbiter.Item.Blueprint;
 import io.github.poisonsheep.thearbiter.Item.ItemRegistry;
+import io.github.poisonsheep.thearbiter.TheArbiter;
 import io.github.poisonsheep.thearbiter.client.blueprint.BlueprintList;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
@@ -18,6 +20,7 @@ import java.util.function.Consumer;
 
 public class BlueprintViewScreen extends BasicBookScreen{
 
+    public static final ResourceLocation BLUEPRINT_ANTHOLOGY_VIW_TEXTURE = new ResourceLocation(TheArbiter.MODID,"textures/gui/blueprint_anthology_gui2.png");
     int page;
     private final Screen parent;
     int maxPagePairCount;
@@ -33,6 +36,9 @@ public class BlueprintViewScreen extends BasicBookScreen{
         createMenu();
         load(this.page);
         PageButton pageBack = new PageButton(this.leftPos + 18, this.topPos - 36, false, button -> {
+            if(page == 0) {
+                this.minecraft.setScreen(this.parent);
+            }
             unload(page);
             this.page = page == 0 ? maxPagePairCount - 1 : (page - 1) % maxPagePairCount;
             load(this.page);
@@ -44,6 +50,12 @@ public class BlueprintViewScreen extends BasicBookScreen{
             load(this.page);
         }, true);
         this.addRenderableWidget(pageForward);
+    }
+
+    @Override
+    public void renderAnthology(PoseStack poseStack) {
+        RenderSystem.setShaderTexture(0, this.BLUEPRINT_ANTHOLOGY_VIW_TEXTURE);
+        blit(poseStack, this.leftPos, this.bottomPos, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_HEIGHT);
     }
 
     private void createMenu() {
@@ -58,7 +70,6 @@ public class BlueprintViewScreen extends BasicBookScreen{
         int width = 17;
         int buttonSize = width - 2;
         int offsetFromEdge = 15;
-
         for (ItemWidget[][][] pagePair : items) {
             for (int pageSide = 0; pageSide < pagePair.length; pageSide++) {
                 ItemWidget[][] page = pagePair[pageSide];

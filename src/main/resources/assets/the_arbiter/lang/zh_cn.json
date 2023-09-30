@@ -22,12 +22,12 @@
   "the_arbiter.blueprint/unknown.tooltip": "愿以此身，受你之痛",
   "the_arbiter.blueprint/unknown.message": "只有创世之大能知道他的秘密",
 
-  "the_arbiter.blueprint_anthology.title": "§6图鉴--蓝图",
-
   "the_arbiter.sound.subtitle.arbiter_sword_charged": "调停者之剑充能完毕",
   "the_arbiter.sound.subtitle.arbiter_sword_use": "使用调停者之剑",
   "the_arbiter.sound.subtitle.zooey": "佐伊",
 
   "gui.read": "§0阅读",
-  "gui.unlock": "§0以解锁"
+  "gui.unlock": "§0以解锁",
+
+  "the_arbiter.blueprint_anthology.title": "图鉴--蓝图"
 }

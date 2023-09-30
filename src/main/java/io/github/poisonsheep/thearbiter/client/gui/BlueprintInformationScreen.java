@@ -26,12 +26,14 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 public class BlueprintInformationScreen extends BasicBookScreen{
+
     private final String blueprint;
     private final Screen parent;
     int toolTipMaxWidth;
     protected final List<RecipeData> recipeData = RecipeDataList.INSTANCE.recipeData;
-
     private final List<Recipe<?>> recipes;
+    TranslatableComponent message;
+    private ScrollableText scrollableText;
     ItemWidget[][] recipeItems;
     int page;
     private boolean renderRecipe;
@@ -42,6 +44,7 @@ public class BlueprintInformationScreen extends BasicBookScreen{
         this.parent = parent;
         recipes = getRecipe(blueprint);
         renderRecipe = !recipes.isEmpty();
+        message = new TranslatableComponent(blueprint.replace(":", ".") + ".message");
     }
     private static void forEach(ItemWidget[][] widgets, Consumer<ItemWidget> widget) {
         for (ItemWidget[] widgetsPage : widgets) {
@@ -56,6 +59,11 @@ public class BlueprintInformationScreen extends BasicBookScreen{
     @Override
     protected void init() {
         super.init();
+        int textStartHeight = this.bottomPos + this.IMAGE_HEIGHT / 2 + 6;
+        int y1 = this.topPos - 36;
+        this.scrollableText = new ScrollableText(message, (this.IMAGE_WIDTH / 2) - 56, y1 - textStartHeight -24, textStartHeight, y1);
+        this.scrollableText.setLeftPos(this.leftPos + 31);
+        this.addRenderableWidget(scrollableText);
         if(renderRecipe) {
             createRecipeMenu();
             load(this.page);
@@ -68,30 +76,31 @@ public class BlueprintInformationScreen extends BasicBookScreen{
         }
     }
 
-    private void putMap() {
+    protected void putMap() {
         ItemStack stack = new ItemStack(ItemRegistry.BLUEPRINT.get());
         Blueprint.setBluePrint(stack, new ResourceLocation(blueprint));
         //按理说ItemWidget带有渲染功能，但是不知道为什么不显示
-        this.itemRenderer.renderAndDecorateItem(stack,this.leftPos + this.IMAGE_WIDTH / 4 - 8 ,this.bottomPos + Math.round(this.IMAGE_HEIGHT / 2) -24);
+        this.itemRenderer.renderAndDecorateItem(stack,this.leftPos + this.IMAGE_WIDTH / 4 - 8 ,this.bottomPos + Math.round(this.IMAGE_HEIGHT / 2) - 48);
     }
 
-    private void putNote(PoseStack poseStack) {
+    protected void putTexture(PoseStack poseStack, ResourceLocation location, int x, int y, int x0, int y0, int length, int height) {
         poseStack.pushPose();
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1, 1, 1, 1);
-        RenderSystem.setShaderTexture(0, BlueprintAnthologyScreen.BOOK_TEXTURES);
+        RenderSystem.setShaderTexture(0, location);
         float scale = 1F;
         poseStack.scale(scale, scale, 0);
-        blit(poseStack, this.leftPos + IMAGE_WIDTH / 2 + 10, this.bottomPos + 42, 0, 128, 110, 127);
+        blit(poseStack, x, y, x0, y0, length, height);
         poseStack.popPose();
     }
 
     @Override
     public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
         super.render(poseStack, mouseX, mouseY, partialTick);
-        Minecraft.getInstance().font.draw(poseStack, this.getTitle(), this.leftPos + Math.round(this.IMAGE_WIDTH / 4) - 24, this.bottomPos + Math.round(this.IMAGE_HEIGHT / 2) -64, 1);
+        putTexture(poseStack, BlueprintAnthologyScreen.BOOK_TEXTURES, this.leftPos + IMAGE_WIDTH / 2 + 10, this.bottomPos + 42, 0, 128, 110, 127);
+        putTexture(poseStack, BlueprintAnthologyScreen.BOOK_TEXTURES, this.leftPos + 40, this.bottomPos + 36, 64, 0, 64, 64);
         putMap();
-        putNote(poseStack);
+        Minecraft.getInstance().font.draw(poseStack, this.getTitle(), this.leftPos + Math.round(this.IMAGE_WIDTH / 4) - 24, this.bottomPos + 24, 1);
         if(renderRecipe) {
             renderRecipe(poseStack, mouseX, mouseY);
         }
@@ -110,7 +119,7 @@ public class BlueprintInformationScreen extends BasicBookScreen{
         });
     }
 
-    public void createRecipeMenu() {
+    protected void createRecipeMenu() {
         List<Recipe<?>> recipeList = getRecipe(this.blueprint);
         int maxPage = recipeList.size();
         recipeItems = new ItemWidget[maxPage][10];
