@@ -1,0 +1,29 @@
+{
+  "parent": "the_arbiter:root",
+  "display": {
+    "icon": {
+      "item": "minecraft:candle"
+    },
+    "title": {
+      "translate": "the_arbiter.advancements.the_embodiment_of_dream.title"
+    },
+    "description": {
+      "translate": "the_arbiter.advancements.the_embodiment_of_dream.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "sleep": {
+      "trigger": "minecraft:slept_in_bed",
+      "conditions": {}
+    }
+  },
+  "requirements": [
+    [
+      "sleep"
+    ]
+  ]
+}

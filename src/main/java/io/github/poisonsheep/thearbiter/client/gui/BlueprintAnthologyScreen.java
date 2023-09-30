@@ -49,7 +49,7 @@ public class BlueprintAnthologyScreen extends BasicBookScreen {
     public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
         super.render(poseStack, mouseX, mouseY, partialTick);
         renderLogo(poseStack);
-        writeTitle(poseStack, preface, this.leftPos + Math.round(this.IMAGE_WIDTH * 3 / 4) - 12, this.bottomPos + 34, 2F);
+        writeTitle(poseStack, preface, this.leftPos + Math.round(this.IMAGE_WIDTH * 3 / 4) - 14, this.bottomPos + 34, 2F);
         writeTitle(poseStack, title,this.leftPos + 30, this.bottomPos + this.IMAGE_HEIGHT / 2 - 4, 0.9F);
         writeTitle(poseStack, author,this.leftPos + 56, this.bottomPos + this.IMAGE_HEIGHT / 2 + 4, 0.6F);
     }

@@ -1,11 +1,14 @@
 package io.github.poisonsheep.thearbiter.event;
 
+import io.github.poisonsheep.thearbiter.Item.ItemRegistry;
 import io.github.poisonsheep.thearbiter.TheArbiter;
 import io.github.poisonsheep.thearbiter.potion.MobEffectRegistry;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraftforge.event.LootTableLoadEvent;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.player.AdvancementEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -30,6 +33,16 @@ public class ForgeEvent {
         if (entity.hasEffect(MobEffectRegistry.UNDYING.get())) {
             // 取消摔落伤害
             event.setCanceled(true);
+        }
+    }
+    @SubscribeEvent
+    public void onAdvancement(AdvancementEvent event) {
+        if(event.getAdvancement().getId().toString().equals("the_arbiter:the_embodiment_of_dream")) {
+            Player player = event.getPlayer();
+            ItemStack book = new ItemStack(ItemRegistry.BLUEPRINT_ANTHOLOGY.get());
+            if (!player.getInventory().add(book)) {
+                player.drop(book, false);
+            }
         }
     }
 }

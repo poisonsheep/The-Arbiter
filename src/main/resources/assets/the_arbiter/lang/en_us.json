@@ -29,10 +29,15 @@
   "gui.read": "§0Read",
   "gui.unlock": "§0To unlock",
 
+  "the_arbiter.blueprint_anthology.title": "Illustrations--Blueprint",
   "the_arbiter.title": "Blueprint Anthology",
-  "the_arbiter.blueprint_anthology.title": "图鉴--蓝图",
   "the_arbiter.author": "§othe arbiter",
-  "the_arbiter.title.preface": "§l序",
-  "the_arbiter.intro": "闪烁的星辰曾在银河之上流淌，自诩穷尽世间一切奥秘的人，在时间的长河中也追逐着星星陨落。找到那些散落在这个世上的知识，它们曾在遥远的过去熠熠生辉。\n不久后我们会再见，希望那时你不会站在这个世界的对立面。",
-  "the_arbiter.tip.viewBlueprint": "查看蓝图"
+  "the_arbiter.title.preface": "§lPreface",
+  "the_arbiter.intro": "The twinkling stars once flowed above the Milky Way. People who claimed to exhaust all the mysteries of the world were also chasing the falling stars in the long river of time. Find those knowledge scattered in this world, they once shone in the distant past.\nWe will see you soon, I hope you won't stand on the opposite side of this world then.",
+  "the_arbiter.tip.viewBlueprint": "View Blueprint",
+
+  "the_arbiter.advancements.root.title": "Hidden Gaze",
+  "the_arbiter.advancements.root.description": "Start the journey to find the fragments of wisdom",
+  "the_arbiter.advancements.the_embodiment_of_dream.title": "§dEmbodiment of Dream",
+  "the_arbiter.advancements.the_embodiment_of_dream.description": "Let me express my gratitude"
 }

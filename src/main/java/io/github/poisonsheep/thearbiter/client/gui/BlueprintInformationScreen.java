@@ -29,13 +29,13 @@ public class BlueprintInformationScreen extends BasicBookScreen{
 
     private final String blueprint;
     private final Screen parent;
-    int toolTipMaxWidth;
     protected final List<RecipeData> recipeData = RecipeDataList.INSTANCE.recipeData;
     private final List<Recipe<?>> recipes;
     TranslatableComponent message;
     private ScrollableText scrollableText;
     ItemWidget[][] recipeItems;
     int page;
+    int toolTipMaxWidth;
     private boolean renderRecipe;
     public BlueprintInformationScreen(String blueprint, Screen parent) {
         super(new TranslatableComponent("the_arbiter.blueprint_anthology.title"));
@@ -106,7 +106,6 @@ public class BlueprintInformationScreen extends BasicBookScreen{
         }
     }
 
-    //citadel渲染合成配方的方法
     protected void renderRecipe(PoseStack poseStack, int mouseX, int mouseY) {
         forEach(recipeItems, ItemWidget -> {
             if (ItemWidget.isMouseOver(mouseX, mouseY)) {

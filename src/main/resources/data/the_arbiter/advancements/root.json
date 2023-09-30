@@ -1,0 +1,29 @@
+{
+  "display": {
+    "icon": {
+      "item": "the_arbiter:blueprint_anthology"
+    },
+    "title": {
+      "translate": "the_arbiter.advancements.root.title"
+    },
+    "description": {
+      "translate": "the_arbiter.advancements.root.description"
+    },
+    "frame": "task",
+    "show_toast": false,
+    "announce_to_chat": false,
+    "hidden": false,
+    "background": ""
+  },
+  "criteria": {
+    "tick": {
+      "trigger": "minecraft:tick",
+      "conditions": {}
+    }
+  },
+  "requirements": [
+    [
+      "tick"
+    ]
+  ]
+}

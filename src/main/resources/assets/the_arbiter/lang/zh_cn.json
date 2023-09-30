@@ -16,7 +16,7 @@
   "the_arbiter.blueprint/dominator": "§t支配者蓝图",
   "the_arbiter.blueprint/dominator.description": "§s拿起它的只会是猎犬",
   "the_arbiter.blueprint/dominator.tooltip": "§3犯罪指数§f0",
-  "the_arbiter.blueprint/dominator.message": "还未推出",
+  "the_arbiter.blueprint/dominator.message": "敬请期待",
   "the_arbiter.blueprint/unknown": "未知蓝图",
   "the_arbiter.blueprint/unknown.description": "§k未知蓝图吃掉了你的脑子",
   "the_arbiter.blueprint/unknown.tooltip": "愿以此身，受你之痛",
@@ -29,5 +29,15 @@
   "gui.read": "§0阅读",
   "gui.unlock": "§0以解锁",
 
-  "the_arbiter.blueprint_anthology.title": "图鉴--蓝图"
+  "the_arbiter.blueprint_anthology.title": "图鉴--蓝图",
+  "the_arbiter.title": "Blueprint Anthology",
+  "the_arbiter.author": "§othe arbiter",
+  "the_arbiter.title.preface": "§l序",
+  "the_arbiter.intro": "闪烁的星辰曾在银河之上流淌，自诩穷尽世间一切奥秘的人，在时间的长河中也追逐着星星陨落。找到那些散落在这个世上的知识，它们曾在遥远的过去熠熠生辉。\n不久后我们会再见，希望那时你不会站在这个世界的对立面。",
+  "the_arbiter.tip.viewBlueprint": "查看蓝图",
+
+  "the_arbiter.advancements.root.title": "隐匿的注视",
+  "the_arbiter.advancements.root.description": "开启寻找智慧碎片的征程",
+  "the_arbiter.advancements.the_embodiment_of_dream.title": "§d梦的具象",
+  "the_arbiter.advancements.the_embodiment_of_dream.description": "请呈我谢意"
 }
