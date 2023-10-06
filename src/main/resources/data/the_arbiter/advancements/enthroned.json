@@ -1,0 +1,29 @@
+{
+  "parent": "the_arbiter:transform",
+  "display": {
+    "icon": {
+      "item": "the_arbiter:arbiter_sword"
+    },
+    "title": {
+      "translate": "the_arbiter.advancements.enthroned.title"
+    },
+    "description": {
+      "translate": "the_arbiter.advancements.enthroned.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "enthroned": {
+      "trigger": "the_arbiter:enthroned",
+      "conditions": {}
+    }
+  },
+  "requirements": [
+    [
+      "enthroned"
+    ]
+  ]
+}

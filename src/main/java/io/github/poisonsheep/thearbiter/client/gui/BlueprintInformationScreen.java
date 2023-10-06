@@ -80,7 +80,7 @@ public class BlueprintInformationScreen extends BasicBookScreen{
         ItemStack stack = new ItemStack(ItemRegistry.BLUEPRINT.get());
         Blueprint.setBluePrint(stack, new ResourceLocation(blueprint));
         //按理说ItemWidget带有渲染功能，但是不知道为什么不显示
-        this.itemRenderer.renderAndDecorateItem(stack,this.leftPos + this.IMAGE_WIDTH / 4 - 8 ,this.bottomPos + Math.round(this.IMAGE_HEIGHT / 2) - 48);
+        this.itemRenderer.renderAndDecorateItem(stack,this.leftPos + this.IMAGE_WIDTH / 4 - 8 ,this.bottomPos + Math.round(this.IMAGE_HEIGHT / 2) - 49);
     }
 
     protected void putTexture(PoseStack poseStack, ResourceLocation location, int x, int y, int x0, int y0, int length, int height) {

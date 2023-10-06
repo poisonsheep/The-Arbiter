@@ -35,7 +35,9 @@ public class BlueprintSerializer extends ForgeRegistryEntry<RecipeSerializer<?>>
         Recipe<?> recipe = value.fromNetwork(innerRecipeId, buffer);
         String blueprint = buffer.readUtf();
         RecipeData data = new RecipeData(blueprint, recipe);
-        RecipeDataList.INSTANCE.recipeData.add(data);
+        if(!RecipeDataList.INSTANCE.recipeData.contains(data)) {
+            RecipeDataList.INSTANCE.recipeData.add(data);
+        }
         return new BlueprintRecipe(blueprintId, blueprint, (CraftingRecipe) recipe);
     }
 

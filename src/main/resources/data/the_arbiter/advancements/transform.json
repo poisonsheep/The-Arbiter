@@ -1,0 +1,29 @@
+{
+  "parent": "the_arbiter:the_beginning_of_the_journey",
+  "display": {
+    "icon": {
+      "item": "minecraft:ender_eye"
+    },
+    "title": {
+      "translate": "the_arbiter.advancements.transform.title"
+    },
+    "description": {
+      "translate": "the_arbiter.advancements.transform.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "transform": {
+      "trigger": "the_arbiter:transform",
+      "conditions": {}
+    }
+  },
+  "requirements": [
+    [
+      "transform"
+    ]
+  ]
+}

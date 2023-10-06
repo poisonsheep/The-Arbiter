@@ -1,6 +1,5 @@
 package io.github.poisonsheep.thearbiter.Item;
 
-import io.github.poisonsheep.thearbiter.Item.ItemRegistry;
 import io.github.poisonsheep.thearbiter.TheArbiter;
 import io.github.poisonsheep.thearbiter.capability.PlayerBlueprint;
 import io.github.poisonsheep.thearbiter.capability.PlayerBlueprintProvider;
@@ -28,6 +27,7 @@ import java.util.Objects;
 
 public class Blueprint extends Item {
     public static final ResourceLocation UNKNOWN_BLUEPRINT = new ResourceLocation(TheArbiter.MODID, "blueprint/unknown");
+    public static final ResourceLocation ARBITER_SWORD_BLUEPRINT = new ResourceLocation(TheArbiter.MODID, "blueprint/arbiter_sword");
     public Blueprint() {
         super(new Properties().stacksTo(1));
     }
@@ -79,28 +79,25 @@ public class Blueprint extends Item {
             List<String> blueprints = playerBlueprint.getBlueprints();
             if(Objects.equals(name, UNKNOWN_BLUEPRINT)) {
                 blueprints.clear();
+            }
+            // 检查玩家的能力列表中是否包含当前物品的蓝图名称
+            if (!blueprints.contains(name.toString())) {
+                // 如果不包含，那么表示玩家没有阅读过这个物品
+                CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer) player, stack);
+                MinecraftForge.EVENT_BUS.post(new ReadEvent((ServerPlayer)player,stack));
+                player.awardStat(Stats.ITEM_USED.get(this));
                 player.sendMessage(new TranslatableComponent(name.toString().replace(":", ".") + ".tooltip"), Util.NIL_UUID);
-            }else {
-                // 检查玩家的能力列表中是否包含当前物品的蓝图名称
-                if (!blueprints.contains(name.toString())) {
-                    // 如果不包含，那么表示玩家没有阅读过这个物品
-                    CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer) player, stack);
-                    MinecraftForge.EVENT_BUS.post(new ReadEvent((ServerPlayer)player,stack));
-                    player.awardStat(Stats.ITEM_USED.get(this));
-                    player.sendMessage(new TranslatableComponent(name.toString().replace(":", ".") + ".tooltip"), Util.NIL_UUID);
-                } else {
-                    // 如果包含，那么表示玩家已经阅读过这个物品，不要再触发阅读事件
-                    // 给玩家一个提示信息
-                    player.sendMessage(new TranslatableComponent("message.the_arbiter.already_read"), Util.NIL_UUID);
-                }
-                //判断玩家是否是创造模式
-                if (!player.getAbilities().instabuild) {
-                    ItemStack paper = new ItemStack(Items.PAPER);
-                    if (!player.getInventory().add(paper)) {
-                        player.drop(paper, false);
-                    }
-                    stack.shrink(1);
-                }
+            } else {
+                // 如果包含，那么表示玩家已经阅读过这个物品，不要再触发阅读事件
+                // 给玩家一个提示信息
+                player.sendMessage(new TranslatableComponent("message.the_arbiter.already_read"), Util.NIL_UUID);
+            }
+            //判断玩家是否是创造模式
+            if (!player.getAbilities().instabuild) {
+                ItemStack paper = new ItemStack(Items.PAPER);
+                if (!player.getInventory().add(paper)) {
+                    player.drop(paper, false);
+                }stack.shrink(1);
             }
         }
         if(level.isClientSide){

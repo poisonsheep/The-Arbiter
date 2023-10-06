@@ -1,5 +1,6 @@
 package io.github.poisonsheep.thearbiter.event;
 
+import io.github.poisonsheep.thearbiter.Item.Blueprint;
 import io.github.poisonsheep.thearbiter.Item.ItemRegistry;
 import io.github.poisonsheep.thearbiter.TheArbiter;
 import io.github.poisonsheep.thearbiter.potion.MobEffectRegistry;
@@ -42,6 +43,14 @@ public class ForgeEvent {
             ItemStack book = new ItemStack(ItemRegistry.BLUEPRINT_ANTHOLOGY.get());
             if (!player.getInventory().add(book)) {
                 player.drop(book, false);
+            }
+        }
+        if(event.getAdvancement().getId().toString().equals("the_arbiter:transform")) {
+            Player player = event.getPlayer();
+            ItemStack blueprint = new ItemStack(ItemRegistry.BLUEPRINT.get());
+            Blueprint.setBluePrint(blueprint ,Blueprint.ARBITER_SWORD_BLUEPRINT);
+            if (!player.getInventory().add(blueprint)) {
+                player.drop(blueprint, false);
             }
         }
     }

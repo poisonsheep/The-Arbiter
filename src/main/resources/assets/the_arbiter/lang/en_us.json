@@ -2,17 +2,21 @@
   "effect.the_arbiter.undying": "The Arbiter's Protection",
   "itemGroup.the_arbiter.blueprint_tab": "The Arbiter | Blueprint",
 
-  "item.arbiter_sword.description": "§5The sword in my hand is the bright mirror that reflects the sky, the sorrow of all things is cut by me",
+  "item.shift_up": "Press SHIFT for more info!",
   "item.the_arbiter.arbiter_sword": "§3§lThe Arbiter's Sword",
+  "item.arbiter_sword.description": "§5The sword in my hand is the bright mirror that reflects the sky, the sorrow of all things is cut by me",
+  "item.arbiter_sword.tooltip": "Right use the descending lightning to judge enemies around you, gain the refuge of a mediator",
   "item.the_arbiter.blueprint_anthology": "Blueprint Collection",
 
   "message.the_arbiter.already_clear": "You chose to forget",
   "message.the_arbiter.already_read": "§5§lMiracles won't flash twice",
+  "message.the_arbiter.not_qualified": "You're not qualified",
+
 
   "the_arbiter.blueprint/arbiter_sword": "§3§lThe Arbiter's Sword Blueprint",
   "the_arbiter.blueprint/arbiter_sword.description": "§mAre you qualified?",
   "the_arbiter.blueprint/arbiter_sword.tooltip": "§eYou witnessed the true power",
-  "the_arbiter.blueprint/arbiter_sword.message": "§uHear the end of the world hold this power",
+  "the_arbiter.blueprint/arbiter_sword.message": "§uKeep searching until she arrives",
   "the_arbiter.blueprint/dominator": "§tDominator Blueprint",
   "the_arbiter.blueprint/dominator.description": "§sOnly hounds will pick it up",
   "the_arbiter.blueprint/dominator.tooltip": "§3Crime Index§f0",
@@ -39,5 +43,11 @@
   "the_arbiter.advancements.root.title": "Hidden Gaze",
   "the_arbiter.advancements.root.description": "Start the journey to find the fragments of wisdom",
   "the_arbiter.advancements.the_embodiment_of_dream.title": "§dEmbodiment of Dream",
-  "the_arbiter.advancements.the_embodiment_of_dream.description": "Let me express my gratitude"
+  "the_arbiter.advancements.the_embodiment_of_dream.description": "Let me express my gratitude",
+  "the_arbiter.advancements.transform.title": "§6Transform",
+  "the_arbiter.advancements.transform.description": "§6Witness your power",
+  "the_arbiter.advancements.enthroned.title": "§6Take the crown",
+  "the_arbiter.advancements.enthroned.description": "Divine mandate, supreme authority!",
+  "the_arbiter.advancements.the_beginning_of_the_journey.title": "The beginning of the journey",
+  "the_arbiter.advancements.the_beginning_of_the_journey.description": "It was like an Epiphany"
 }

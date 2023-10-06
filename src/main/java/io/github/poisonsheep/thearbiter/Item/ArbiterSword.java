@@ -1,11 +1,14 @@
 package io.github.poisonsheep.thearbiter.Item;
 
+import io.github.poisonsheep.thearbiter.capability.PlayerBlueprint;
+import io.github.poisonsheep.thearbiter.capability.PlayerBlueprintProvider;
 import io.github.poisonsheep.thearbiter.client.particle.ParticlesRegistry;
 import io.github.poisonsheep.thearbiter.client.render.item.RenderArbiterSword;
 import io.github.poisonsheep.thearbiter.client.sound.SoundRegistry;
 import io.github.poisonsheep.thearbiter.potion.MobEffectRegistry;
 import io.github.poisonsheep.thearbiter.util.BallUtil;
-import net.minecraft.ChatFormatting;
+import net.minecraft.Util;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -16,8 +19,10 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
@@ -96,6 +101,20 @@ public class ArbiterSword extends SwordItem implements IAnimatable, ISyncable {
         GeckoLibNetwork.registerSyncable(this);
         ballUtil.update_radius(1.5,24);
     }
+
+    @Override
+    public void inventoryTick(ItemStack itemStack, Level level, Entity entity, int slot, boolean selected) {
+        super.inventoryTick(itemStack, level, entity, slot, selected);
+        if(entity.isAlive()) {
+            if(entity instanceof Player ) {
+                Player player = (Player) entity;
+                if(!canBear(player)) {
+                    player.hurt(DamageSource.LIGHTNING_BOLT, 1.5F);
+                }
+            }
+        }
+    }
+
     @Override
     public void initializeClient(Consumer<IItemRenderProperties> consumer) {
         super.initializeClient(consumer);
@@ -113,42 +132,49 @@ public class ArbiterSword extends SwordItem implements IAnimatable, ISyncable {
     }
     @Override
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player player, InteractionHand hand) {
-       //进行使用动作
-        player.startUsingItem(hand);
-        if(!worldIn.isClientSide){
-            BlockPos blockpos = player.blockPosition();
-            List<LivingEntity> entities = worldIn.getEntitiesOfClass(LivingEntity.class,new AABB(blockpos).inflate(20));
-            for (LivingEntity entity:entities){
-                if(entity!=player){
-                    //给命中生物添加发光药水效果
-                    entity.addEffect(new MobEffectInstance(MobEffects.GLOWING,200));
-                    LightningBolt lightningbolt = EntityType.LIGHTNING_BOLT.create(worldIn);
-                    lightningbolt.moveTo(Vec3.atBottomCenterOf(entity.blockPosition()));
-                    lightningbolt.setCause(player instanceof ServerPlayer ? (ServerPlayer)player : null);
-                    lightningbolt.setVisualOnly(true);
-                    worldIn.addFreshEntity(lightningbolt);
-                }
-                if(entity.getHealth() >=1 ){
-                    entity.setHealth(1);
+            if(!worldIn.isClientSide){
+                if(!canBear(player)) {
+                    player.hurt(DamageSource.LIGHTNING_BOLT, Float.MAX_VALUE);
+                } else {
+                    player.startUsingItem(hand);
+                    BlockPos blockpos = player.blockPosition();
+                    List<LivingEntity> entities = worldIn.getEntitiesOfClass(LivingEntity.class,new AABB(blockpos).inflate(20));
+                    for (LivingEntity entity:entities){
+                        if(entity!=player){
+                            //给命中生物添加发光药水效果
+                            entity.addEffect(new MobEffectInstance(MobEffects.GLOWING,200));
+                            LightningBolt lightningbolt = EntityType.LIGHTNING_BOLT.create(worldIn);
+                            lightningbolt.moveTo(Vec3.atBottomCenterOf(entity.blockPosition()));
+                            lightningbolt.setCause(player instanceof ServerPlayer ? (ServerPlayer)player : null);
+                            lightningbolt.setVisualOnly(true);
+                            worldIn.addFreshEntity(lightningbolt);
+                        }
+                        if(entity.getHealth() >=1 ){
+                            entity.setHealth(1);
+                        }
+                    }
+                    player.getCooldowns().addCooldown(this, 800);
+                    //为玩家添加调停者的庇护
+                    player.addEffect(new MobEffectInstance(MobEffectRegistry.UNDYING.get(), 200));
+                    ItemStack itemstack = player.getItemInHand(hand);
+                    final int id = GeckoLibUtil.guaranteeIDForStack(itemstack, (ServerLevel) worldIn);
+                    final PacketDistributor.PacketTarget target = PacketDistributor.TRACKING_ENTITY_AND_SELF
+                            .with(() -> player);
+                    GeckoLibNetwork.syncAnimation(target, this, id, No_ENCHANTED);
+                    worldIn.playSound((Player)null, player.getX(), player.getY(), player.getZ(),SoundRegistry.ARBITER_SWORD_USE.get(), SoundSource.PLAYERS, 1f,1f);
                 }
             }
-            player.getCooldowns().addCooldown(this, 800);
-            //为玩家添加调停者的庇护
-            player.addEffect(new MobEffectInstance(MobEffectRegistry.UNDYING.get(), 200));
-            ItemStack itemstack = player.getItemInHand(hand);
-            final int id = GeckoLibUtil.guaranteeIDForStack(itemstack, (ServerLevel) worldIn);
-            final PacketDistributor.PacketTarget target = PacketDistributor.TRACKING_ENTITY_AND_SELF
-                    .with(() -> player);
-            GeckoLibNetwork.syncAnimation(target, this, id, No_ENCHANTED);
-            worldIn.playSound((Player)null, player.getX(), player.getY(), player.getZ(),SoundRegistry.ARBITER_SWORD_USE.get(), SoundSource.PLAYERS, 1f,1f);
-        }
-        if(worldIn.isClientSide){
-            player.playSound(SoundRegistry.ZOOEY.get(),1f,1f);
-            for (int i = 0; i < BallUtil.max; i++) {
-                BallUtil.Position position = BallUtil.getPosition(i);
-                worldIn.addParticle(ParticlesRegistry.SHELTER_PARTICLES.get(),player.getX() + position.x,player.getY() + position.y + 1.2,player.getZ() + position.z,player.getX(),player.getY(),player.getZ());
+            if(worldIn.isClientSide){
+                if(canBear(player)) {
+                    player.playSound(SoundRegistry.ZOOEY.get(),1f,1f);
+                    for (int i = 0; i < BallUtil.max; i++) {
+                        BallUtil.Position position = BallUtil.getPosition(i);
+                        worldIn.addParticle(ParticlesRegistry.SHELTER_PARTICLES.get(),player.getX() + position.x,player.getY() + position.y + 1.2,player.getZ() + position.z,player.getX(),player.getY(),player.getZ());
+                    }
+                } else {
+                    player.sendMessage(new TranslatableComponent("message.the_arbiter.not_qualified"), Util.NIL_UUID);
+                }
             }
-        }
         return super.use(worldIn, player, hand);
     }
 
@@ -185,6 +211,19 @@ public class ArbiterSword extends SwordItem implements IAnimatable, ISyncable {
     @Override
     public void appendHoverText(ItemStack stack, @javax.annotation.Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
         tooltip.add(new TranslatableComponent("item.arbiter_sword.description"));
+        if(Screen.hasShiftDown()) {
+            tooltip.add(new TranslatableComponent("item.arbiter_sword.tooltip"));
+        } else {
+            tooltip.add(new TranslatableComponent("item.shift_up"));
+        }
+    }
+    private boolean canBear(Player player) {
+        PlayerBlueprint playerBlueprint = player.getCapability(PlayerBlueprintProvider.PLAYER_BLUEPRINT_CAPABILITY).orElseThrow(() -> new RuntimeException("Player does not have PlayerBlueprint capability"));
+        List<String> blueprints = playerBlueprint.getBlueprints();
+        if(!blueprints.contains(Blueprint.ARBITER_SWORD_BLUEPRINT.toString())) {
+            return false;
+        }
+        return true;
     }
 }
 

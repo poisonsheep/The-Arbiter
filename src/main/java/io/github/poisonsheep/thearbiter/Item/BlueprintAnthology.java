@@ -11,6 +11,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
+
 public class BlueprintAnthology extends Item {
     public BlueprintAnthology() {
         super(new Properties().tab(ItemRegistry.BLUEPRINT_TAB).stacksTo(1));
@@ -24,6 +25,7 @@ public class BlueprintAnthology extends Item {
         }
         return super.use(level, player, hand);
     }
+
     private static class Client {
         public static void openScreen() {
             Minecraft.getInstance().setScreen(new BlueprintAnthologyScreen(new TextComponent("book")));
