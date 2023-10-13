@@ -24,7 +24,7 @@ public class BlueprintViewScreen extends BasicBookScreen{
     int page;
     private final Screen parent;
     int maxPagePairCount;
-    ItemWidget[][][][] items;
+    BlueprintWidget[][][][] items;
     protected BlueprintViewScreen(Screen parent) {
         super(new TextComponent(""));
         this.parent = parent;
@@ -62,19 +62,33 @@ public class BlueprintViewScreen extends BasicBookScreen{
         createMenu(6, 10);
     }
 
+    private static void forEach(BlueprintWidget[][][][] widgets, Consumer<BlueprintWidget> widget) {
+        for (BlueprintWidget[][][] itemWidgetsPage : widgets) {
+            for (BlueprintWidget[][] itemWidgetsLeftRight : itemWidgetsPage) {
+                for (BlueprintWidget[] itemWidgets : itemWidgetsLeftRight) {
+                    for (BlueprintWidget BlueprintWidget : itemWidgets) {
+                        if (BlueprintWidget != null) {
+                            widget.accept(BlueprintWidget);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     private void createMenu(int rowLength, int columnLength) {
         List<String> blueprints = BlueprintList.INSTANCE.blueprints;
         this.maxPagePairCount = (blueprints.size()/ (rowLength * columnLength)) / 2 + 1;
-        items = new ItemWidget[maxPagePairCount][2][columnLength][rowLength];
+        items = new BlueprintWidget[maxPagePairCount][2][columnLength][rowLength];
         int registryIdx = 0;
         int width = 17;
         int buttonSize = width - 2;
         int offsetFromEdge = 15;
-        for (ItemWidget[][][] pagePair : items) {
+        for (BlueprintWidget[][][] pagePair : items) {
             for (int pageSide = 0; pageSide < pagePair.length; pageSide++) {
-                ItemWidget[][] page = pagePair[pageSide];
+                BlueprintWidget[][] page = pagePair[pageSide];
                 int yOffset = this.bottomPos + offsetFromEdge;
-                for (ItemWidget[] row : page) {
+                for (BlueprintWidget[] row : page) {
                     int xOffset = this.leftPos + offsetFromEdge + 4;
                     for (int columnIdx = 0; columnIdx < row.length; columnIdx++) {
                         int startX = ((IMAGE_WIDTH / 2) - 8) * pageSide;
@@ -84,7 +98,7 @@ public class BlueprintViewScreen extends BasicBookScreen{
                         String blueprint = blueprints.get(registryIdx);
                         ItemStack stack = new ItemStack(ItemRegistry.BLUEPRINT.get());
                         Blueprint.setBluePrint(stack, new ResourceLocation(blueprint));
-                        ItemWidget itemWidget = new ItemWidget(stack, this.itemRenderer, xOffset + startX, yOffset, buttonSize, buttonSize, button -> {
+                        BlueprintWidget itemWidget = new BlueprintWidget(stack, this.itemRenderer, blueprint,xOffset + startX, yOffset, buttonSize, buttonSize, button -> {
                             this.minecraft.setScreen(new BlueprintInformationScreen(blueprint, this));
                         });
                         row[columnIdx] = this.addRenderableWidget(itemWidget);
@@ -96,40 +110,33 @@ public class BlueprintViewScreen extends BasicBookScreen{
             }
         }
     }
+
     @Override
     public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
         super.render(poseStack, mouseX, mouseY, partialTick);
-        forEach(items, ItemWidget -> {
-            if (ItemWidget.isMouseOver(mouseX, mouseY)) {
-                List<Component> tooltipLines = ItemWidget.stack.getTooltipLines(Minecraft.getInstance().player, this.minecraft.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL);
-                if (ItemWidget.hasAdditonalInfo) {
+        forEach(items, BlueprintWidget -> {
+            if (BlueprintWidget.isMouseOver(mouseX, mouseY)) {
+                List<Component> tooltipLines = BlueprintWidget.stack.getTooltipLines(Minecraft.getInstance().player, this.minecraft.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL);
+                if (BlueprintWidget.hasAdditonalInfo) {
                     tooltipLines.add(1, new TextComponent("Click for more info"));
                 }
-                this.renderTooltip(poseStack, tooltipLines, ItemWidget.stack.getTooltipImage(), mouseX, mouseY);
+                this.renderTooltip(poseStack, tooltipLines, BlueprintWidget.stack.getTooltipImage(), mouseX, mouseY);
             }
         });
+        mark(mouseX, mouseY);
     }
-    private static void forEach(ItemWidget[][][][] widgets, Consumer<ItemWidget> widget) {
-        for (ItemWidget[][][] itemWidgetsPage : widgets) {
-            for (ItemWidget[][] itemWidgetsLeftRight : itemWidgetsPage) {
-                for (ItemWidget[] itemWidgets : itemWidgetsLeftRight) {
-                    for (ItemWidget ItemWidget : itemWidgets) {
-                        if (ItemWidget != null) {
-                            widget.accept(ItemWidget);
-                        }
-                    }
-                }
-            }
-        }
+
+    private void mark(int mouseX, int mouseY) {
+
     }
     private void unload(int page) {
-        ItemWidget[][][] renderableItem = this.items[page];
-        for (ItemWidget[][] itemWidgetsByPage : renderableItem) {
-            for (ItemWidget[] itemWidgets : itemWidgetsByPage) {
-                for (ItemWidget ItemWidget : itemWidgets) {
-                    if (ItemWidget != null) {
-                        ItemWidget.visible = false;
-                        ItemWidget.active = false;
+        BlueprintWidget[][][] renderableItem = this.items[page];
+        for (BlueprintWidget[][] itemWidgetsByPage : renderableItem) {
+            for (BlueprintWidget[] itemWidgets : itemWidgetsByPage) {
+                for (BlueprintWidget BlueprintWidget : itemWidgets) {
+                    if (BlueprintWidget != null) {
+                        BlueprintWidget.visible = false;
+                        BlueprintWidget.active = false;
                     }
                 }
             }
@@ -137,10 +144,10 @@ public class BlueprintViewScreen extends BasicBookScreen{
     }
 
     private void load(int page) {
-        ItemWidget[][][] renderableItem = this.items[page];
-        for (ItemWidget[][] itemWidgetsByPage : renderableItem) {
-            for (ItemWidget[] itemWidgets : itemWidgetsByPage) {
-                for (ItemWidget itemWidget : itemWidgets) {
+        BlueprintWidget[][][] renderableItem = this.items[page];
+        for (BlueprintWidget[][] itemWidgetsByPage : renderableItem) {
+            for (BlueprintWidget[] itemWidgets : itemWidgetsByPage) {
+                for (BlueprintWidget itemWidget : itemWidgets) {
                     if (itemWidget != null) {
                         itemWidget.visible = true;
                         itemWidget.active = true;

@@ -19,31 +19,33 @@ import net.minecraftforge.network.PacketDistributor;
 public class LearnEvent {
     @SubscribeEvent()
     public void playerLearn(ReadEvent event) {
-        Player player = event.getPlayer();
-        AdvancementTriggerRegistry.FIRST_READ.trigger((ServerPlayer) player);
-        ItemStack stack = event.getStack();
-        CompoundTag tag = stack.getTag();
-        if(tag != null && tag.contains("blueprint")) {
-            String blueprint = tag.getString("blueprint");
-            if(blueprint.equals(Blueprint.ARBITER_SWORD_BLUEPRINT.toString())) {
-                AdvancementTriggerRegistry.ENTHRONED.trigger((ServerPlayer) player);
-            }
-            if(player.getCapability(PlayerBlueprintProvider.PLAYER_BLUEPRINT_CAPABILITY).isPresent()){
-                PlayerBlueprint playerBlueprint = player.getCapability(PlayerBlueprintProvider.PLAYER_BLUEPRINT_CAPABILITY).orElseThrow(() -> new RuntimeException("Player does not have PlayerBlueprint capability"));
-                playerBlueprint.addBluePrints(blueprint);
-                ModNetwork.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer)player), new BlueprintUpdatePacket(playerBlueprint.getBlueprints()));
-                Boolean transform = true;
-                for (RecipeData data : RecipeDataList.INSTANCE.recipeData) {
-                    String blueprint2 = data.getBlueprint();
-                    if(!blueprint2.equals(Blueprint.ARBITER_SWORD_BLUEPRINT.toString())) {
-                        if(!playerBlueprint.getBlueprints().contains(blueprint2)) {
-                            transform = false;
-                            break;
+        if(!event.getPlayer().level.isClientSide) {
+            Player player = event.getPlayer();
+            AdvancementTriggerRegistry.FIRST_READ.trigger((ServerPlayer) player);
+            ItemStack stack = event.getStack();
+            CompoundTag tag = stack.getTag();
+            if(tag != null && tag.contains("blueprint")) {
+                String blueprint = tag.getString("blueprint");
+                if(blueprint.equals(Blueprint.ARBITER_SWORD_BLUEPRINT.toString())) {
+                    AdvancementTriggerRegistry.ENTHRONED.trigger((ServerPlayer) player);
+                }
+                if(player.getCapability(PlayerBlueprintProvider.PLAYER_BLUEPRINT_CAPABILITY).isPresent()){
+                    PlayerBlueprint playerBlueprint = player.getCapability(PlayerBlueprintProvider.PLAYER_BLUEPRINT_CAPABILITY).orElseThrow(() -> new RuntimeException("Player does not have PlayerBlueprint capability"));
+                    playerBlueprint.addBluePrints(blueprint);
+                    ModNetwork.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer)player), new BlueprintUpdatePacket(playerBlueprint.getBlueprints()));
+                    Boolean transform = true;
+                    for (RecipeData data : RecipeDataList.INSTANCE.recipeData) {
+                        String blueprint2 = data.getBlueprint();
+                        if(!blueprint2.equals(Blueprint.ARBITER_SWORD_BLUEPRINT.toString())) {
+                            if(!playerBlueprint.getBlueprints().contains(blueprint2)) {
+                                transform = false;
+                                break;
+                            }
                         }
                     }
-                }
-                if(transform) {
-                    AdvancementTriggerRegistry.TRANSFORM.trigger((ServerPlayer) player);
+                    if(transform) {
+                        AdvancementTriggerRegistry.TRANSFORM.trigger((ServerPlayer) player);
+                    }
                 }
             }
         }
