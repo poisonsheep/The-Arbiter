@@ -1,10 +1,15 @@
 package io.github.poisonsheep.thearbiter.network.packet;
 
+import io.github.poisonsheep.thearbiter.capability.PlayerBlueprint;
 import io.github.poisonsheep.thearbiter.capability.PlayerBlueprintProvider;
+import io.github.poisonsheep.thearbiter.network.ModNetwork;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.network.PacketDistributor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +47,14 @@ public class BlueprintUpdatePacket {
                 Player player = Minecraft.getInstance().player;
                 Objects.requireNonNull(player).getCapability(PlayerBlueprintProvider.PLAYER_BLUEPRINT_CAPABILITY).ifPresent(c -> c.setBlueprints(blueprints));
             });
+        }
+    }
+
+    public static void synchronize(PlayerEvent event) {
+        ServerPlayer player = (ServerPlayer) event.getPlayer();
+        if(player.getCapability(PlayerBlueprintProvider.PLAYER_BLUEPRINT_CAPABILITY).isPresent()) {
+            PlayerBlueprint playerBlueprint = player.getCapability(PlayerBlueprintProvider.PLAYER_BLUEPRINT_CAPABILITY).orElseThrow(() -> new RuntimeException("Player does not have PlayerBlueprint capability"));
+            ModNetwork.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new BlueprintUpdatePacket(playerBlueprint.getBlueprints()));
         }
     }
 }

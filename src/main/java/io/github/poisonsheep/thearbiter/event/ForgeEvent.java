@@ -3,12 +3,8 @@ package io.github.poisonsheep.thearbiter.event;
 import io.github.poisonsheep.thearbiter.Item.Blueprint;
 import io.github.poisonsheep.thearbiter.Item.ItemRegistry;
 import io.github.poisonsheep.thearbiter.TheArbiter;
-import io.github.poisonsheep.thearbiter.capability.PlayerBlueprint;
-import io.github.poisonsheep.thearbiter.capability.PlayerBlueprintProvider;
-import io.github.poisonsheep.thearbiter.network.ModNetwork;
 import io.github.poisonsheep.thearbiter.network.packet.BlueprintUpdatePacket;
 import io.github.poisonsheep.thearbiter.potion.MobEffectRegistry;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -18,7 +14,6 @@ import net.minecraftforge.event.entity.player.AdvancementEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.network.PacketDistributor;
 
 //Forge事件总线是用来处理和游戏运行相关的事件
 @Mod.EventBusSubscriber(modid = TheArbiter.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
@@ -63,12 +58,15 @@ public class ForgeEvent {
     }
     @SubscribeEvent
     public void onPlayerJoinWorld(PlayerEvent.PlayerLoggedInEvent event) {
-        if(!event.getPlayer().level.isClientSide) {
-            ServerPlayer player = (ServerPlayer) event.getPlayer();
-            if(player.getCapability(PlayerBlueprintProvider.PLAYER_BLUEPRINT_CAPABILITY).isPresent()) {
-                PlayerBlueprint playerBlueprint = player.getCapability(PlayerBlueprintProvider.PLAYER_BLUEPRINT_CAPABILITY).orElseThrow(() -> new RuntimeException("Player does not have PlayerBlueprint capability"));
-                ModNetwork.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new BlueprintUpdatePacket(playerBlueprint.getBlueprints()));
-            }
-        }
+        BlueprintUpdatePacket.synchronize(event);
+    }
+    @SubscribeEvent
+    public void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event) {
+        BlueprintUpdatePacket.synchronize(event);
+    }
+
+    @SubscribeEvent
+    public void onPlayerChangeDimension(PlayerEvent.PlayerChangedDimensionEvent event) {
+        BlueprintUpdatePacket.synchronize(event);
     }
 }
